@@ -37,11 +37,18 @@ export const classify = async (inputText) => {
 
     const output = classifier(inputText, { topk: 6 });
 
-    output.then(output => {
-        console.log(output)
-    }).catch(error => {
-        console.log('Error: ', error)
+    return new Promise((resolve, reject) => {
+        output.then(output => {
+            console.log(output)
+            resolve(output);
+        }).catch(error => {
+            console.log('Error: ', error)
+            reject(error);
+        })
     })
+
+
+
 
 }
 

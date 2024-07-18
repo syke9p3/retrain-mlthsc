@@ -114,6 +114,9 @@
             </div>
         </section>
 
+
+        <div id="output">Output</div>
+
         <!-- Labels and Results Display Section -->
         <section id="label-section">
             <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
@@ -125,12 +128,14 @@
 
             <textarea type="text" value="" style="display: none" id="extractedText" disabled></textarea>
 
+
             <!-- No Labels Container (Displayed when no labels are identified) -->
             <div id="no-labels-container" style="display: none">
                 <div class="analyze_container result-fade-in">
                     <p>No label identified, please add more words.</p>
                 </div>
             </div>
+
 
             <!-- Container for Displaying Labels -->
             <div class="labels-container" id="labels-container">
@@ -173,27 +178,6 @@
                 </button>
             </div>
         </section>
-
-        <!-- Batch Section -->
-        <article id="batch-section" style="display: none">
-            <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
-                <h4>Hate Speech Posts</h4>
-                <button id="save-batch-btn" class="btn btn-save">
-                    <i class="bx bxs-save bx-xs"></i> Save
-                </button>
-            </div>
-            <div>
-                <table id="table-container">
-                    <thead>
-                        <tr>
-                            <th>Post</th>
-                            <th>All Labels</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </article>
 
         <!-- Saved Posts Section -->
         <section id="saved-post">

@@ -11,8 +11,7 @@ const submitButton = document.getElementById("analyze-btn")
 const clearButton = document.getElementById("clear-btn")
 const exampleSelector = document.getElementById("sample-hate-speech")
 const wordCountDisplay = document.getElementById("word-count")
-
-debug("opening app.js...")
+const outputDisplay = document.getElementById("output")
 
 export function debug(...args) {
     console.log(...args);
@@ -24,12 +23,9 @@ function debugGlobalState() {
     console.log(`Field Input: ${inputField.value}`);
     console.log(`Global Word Count: ${globalState.wordCount}`);
     console.log(`Field Word Count: ${getWordCountFromInputField()}`);
-    console.log(`Global Output: ${globalState.output}`);
+    console.log(`Global Output:`, globalState.output);
     console.groupEnd();
 }
-
-
-
 
 const setGlobalInput = (text) => {
     globalState.input = text;
@@ -37,6 +33,10 @@ const setGlobalInput = (text) => {
 
 const setGlobalWordCount = (number) => {
     globalState.wordCount = number;
+}
+
+const setGlobalOutput = (array) => {
+    globalState.output = array;
 }
 
 // initialize global states
@@ -122,6 +122,20 @@ const setInputFieldValue = (text) => {
     inputField.value = text
 }
 
+const updateOutputDisplay = () => {
+
+    let outputText = "";
+
+    globalState.output.forEach(label => {
+        let text = label.label
+        let score = label.score
+
+        outputText += `<p>${text} - ${(score * 100).toFixed(2)}%</p>`
+    });
+
+    outputDisplay.innerHTML = outputText;
+}
+
 
 clearButton.onclick = (e) => {
     // TEST: should remove content inside inputField
@@ -138,7 +152,7 @@ clearButton.onclick = (e) => {
 
 }
 
-submitButton.onclick = (e) => {
+submitButton.onclick = async (e) => {
     // TEST: should get value of inputField
     // TEST: should check if word count is enough
 
@@ -158,10 +172,22 @@ submitButton.onclick = (e) => {
     }
 
     debug('submit input')
-    debugGlobalState()
-    debugFromClassifier()
 
-    classify(globalState.input)
+    const output = await classify(globalState.input)
+    debug('output after classifier: ', output)
+
+    // extract to function
+    // handleOutput
+
+    setGlobalOutput(output);
+
+    debug(globalState.output)
+
+    debugGlobalState()
+
+    debug(globalState.output)
+
+    updateOutputDisplay()
 
 
 }

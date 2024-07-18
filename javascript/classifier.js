@@ -35,7 +35,9 @@ const initializeClassifier = async () => {
 export const classify = async (inputText) => {
     if (!classifier) await initializeClassifier()
 
-    classifier(inputText, { topk: 6 }).then(output => {
+    const output = classifier(inputText, { topk: 6 });
+
+    output.then(output => {
         console.log(output)
     }).catch(error => {
         console.log('Error: ', error)

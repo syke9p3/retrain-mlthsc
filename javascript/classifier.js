@@ -11,7 +11,6 @@ let modelStatus = "loading";
 
 let classifier;
 
-
 /**
  * sets the status of the model
  * @param {string} status 

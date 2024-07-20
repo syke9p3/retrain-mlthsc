@@ -94,6 +94,8 @@ a {
 
 main {
     border-radius: 8px;
+    width: 1024px;
+
 }
 
 section {
@@ -311,12 +313,48 @@ textarea {
     cursor: auto;
 }
 
-#input-display {
-    background-color: #202020;
-    color: var(--white);
-    padding: 1rem 1.5rem;
-    font-family: monospace;
-    line-height: 1.6;
+.input-display-container {
+    background-color: #94D6FF;
+    min-height: 200px;
+    display: block;
+    padding: 3rem 1rem;
+    /* display: none; */
+    /* place-items: center; */
+}
+
+.input-display {
+    border-radius: 4px;
+    background-color: var(--white);
+    border: 1px solid #20202020;
+    font-size: 16px;
+    font-weight: 500;
+    color: #202020;
+    padding: 1.6rem 2rem;
+    line-height: 1.7;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 8px;
+    width: 100%;
+    /* max-width: 768px; */
+}
+
+.tweet-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tweet-name h4 {
+    background: #000;
+    line-height: 0;
+}
+
+.tweet-name p {
+    font-size: 12px;
+    opacity: 50%;
+    margin-top: 5px;
 }
 
 /* Labels */
@@ -337,6 +375,8 @@ textarea {
 .label-container {
     background-color: #a0a9b1;
     border-radius: 25rem;
+    transition: transform 0.5s ease;
+    position: relative;
 }
 
 .label {
@@ -344,7 +384,10 @@ textarea {
     color: var(--white);
     padding: 8px 16px;
     border-radius: 32px;
-    width: 100%;
+    width: 0;
+    animation: loadProgressBar 1s forwards;
+    /* Add animation */
+
 }
 
 .label .label-percent {
@@ -478,9 +521,11 @@ textarea {
     }
 }
 
-.result-fade-in {
+
+.fade-in {
     animation: fadeIn 1s ease;
 }
+
 
 @keyframes fadeOut {
     from {
@@ -494,6 +539,17 @@ textarea {
 
 .fade-out {
     animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes loadProgressBar {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: var(--target-width);
+        /* Use a CSS variable for the target width */
+    }
 }
 
 /* save posts */
@@ -708,14 +764,12 @@ footer {
     padding: 30px 50px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
 }
 
 .model-description {
     text-align: left;
     margin: 10px 0 20px 0;
-    display: flex;
-    justify-content: space-between;
 }
 
 .model-description div:first-child {
@@ -942,9 +996,8 @@ footer {
 } */
 
 .toaster {
-    color: white;
-    background-color: #202020;
-    padding: 10px 20px;
+    color: #202020AA;
+    /* padding: 10px 20px; */
     margin: 10px 0px;
     /* font-weight: bold; */
     opacity: 100;
@@ -1156,7 +1209,7 @@ footer {
 
 .postDisplay {
     transition: opacity 0.5s ease;
-    /* Add a smooth transition for opacity */
+    /* Add a smooth transitiinput-display-texton for opacity */
 }
 
 /* Add this style if you want to stagger the animations */
@@ -1474,4 +1527,39 @@ footer {
 .dark-mode .image-section:hover {
     border-color: #ccc;
     background-color: #434242;
+}
+
+.jw-modal {
+    /* modals are hidden by default */
+    display: none;
+
+    /* modal container fixed across whole screen */
+    position: fixed;
+    inset: 0;
+
+
+    /* z-index must be higher than everything else on the page */
+    z-index: 10000;
+
+    /* semi-transparent black background exposed by padding */
+    background-color: rgba(0, 0, 0, .75);
+    padding: 40px;
+
+    /* enables scrolling for tall modals */
+    overflow: auto;
+}
+
+.jw-modal-body {
+    padding: 20px;
+    background: #fff;
+}
+
+.jw-modal.open {
+    display: grid;
+    place-items: center;
+}
+
+footer article {
+    max-width: 1024px;
+    margin: 0 auto;
 }

@@ -1,6 +1,5 @@
 import { classify, modelStatus } from "./javascript/classifier.js"
-// import { updateLabelsContainer } from "./javascript/output.js";
-import { countWords, isValidWordCount } from "./javascript/utils.js"
+import { countCharacters, isValidCharacterCount, typeWriter, updateLabelsContainer } from "./javascript/utils.js"
 
 export const globalState = {
     prevInput: '',
@@ -15,24 +14,27 @@ const submitButton = document.getElementById("analyze-btn");
 const clearButton = document.getElementById("clear-btn");
 const exampleSelector = document.getElementById("sample-hate-speech");
 const wordCountDisplay = document.getElementById("word-count");
+const labelsContainer = document.getElementById("labels-container");
+const inputDisplayContainer = document.getElementById("input-display-container");
 const inputDisplay = document.getElementById("input-display");
+const inputDisplayText = document.getElementById("input-display-text");
 const outputDisplay = document.getElementById("output-display");
 const loadingDisplay = document.getElementById("loading-display");
 const modelStatusDisplay = document.getElementById("model-status");
 
 export function debug(...args) {
-    console.log(...args);
+    // console.log(...args);
 }
 
 function debugGlobalState() {
-    console.group('Global State Debug:');
-    console.log(`Global Input: ${globalState.input}`);
-    console.log(`Field Input: ${inputField.value}`);
-    console.log(`Global Word Count: ${globalState.wordCount}`);
-    console.log(`Field Word Count: ${getWordCountFromInputField()}`);
-    console.log(`Global Output:`, globalState.output);
-    console.log(`Global IsLoading:`, globalState.isLoading);
-    console.groupEnd();
+    // console.group('Global State Debug:');
+    // console.log(`Global Input: ${globalState.input}`);
+    // console.log(`Field Input: ${inputField.value}`);
+    // console.log(`Global Word Count: ${globalState.wordCount}`);
+    // console.log(`Field Word Count: ${getWordCountFromInputField()}`);
+    // console.log(`Global Output:`, globalState.output);
+    // console.log(`Global IsLoading:`, globalState.isLoading);
+    // console.groupEnd();
 }
 
 const setGlobalInput = (text) => {
@@ -108,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
  * @returns {number} word count of inputField
  */
 const getWordCountFromInputField = () => {
-    const wordCount = countWords(inputField.value)
+    const wordCount = countCharacters(inputField.value)
     return wordCount;
 }
 
@@ -120,7 +122,7 @@ const getWordCountFromInputField = () => {
 const updateWordCountDisplay = (count) => {
     wordCountDisplay.textContent = count;
 
-    if (!isValidWordCount(count)) {
+    if (!isValidCharacterCount(count)) {
         wordCountDisplay.style.color = "red";
     } else {
         wordCountDisplay.style.color = "black";
@@ -135,9 +137,10 @@ const updateWordCountDisplay = (count) => {
 const updateModelStatus = (status) => {
 
     if (status === "loading") {
-        modelStatusDisplay.textContent = "Loading classifier...";
+        modelStatusDisplay.innerHTML = `<span class="loading-spinner"> </span>Loading classifier (will load only once)`;
     } else if (status === "ready") {
-        modelStatusDisplay.textContent = "Classifier is up and running 👍 ";
+        modelStatusDisplay.textContent = "👍 Classifier is up and running.";
+        modelStatusDisplay.textContent = "";
     } else if (status === "error") {
         modelStatusDisplay.textContent = "Error loading classifier";
     } else {
@@ -159,7 +162,7 @@ const updateSubmitButtonState = () => {
     console.groupEnd()
 
     // Disable the submit button if input is invalid or data is being fetched
-    submitButton.disabled = !isValidWordCount(wordCount) || globalState.isLoading || globalState.prevInput === inputField.value;
+    submitButton.disabled = !isValidCharacterCount(wordCount) || globalState.isLoading || globalState.prevInput === inputField.value;
 };
 
 /**
@@ -167,8 +170,11 @@ const updateSubmitButtonState = () => {
  * @param {string | {label: string, score: number}[]} output an array of labels and scores sorted by descending scores
  */
 const updateInputDisplay = (inputText) => {
-    inputDisplay.style.visibility = "visible";
-    inputDisplay.textContent = inputText;
+    inputDisplay.classList.remove("fade-in")
+    inputDisplay.classList.add("fade-in")
+    inputDisplayContainer.style.display = "grid"
+    // inputDisplayText.textContent = inputText
+    typeWriter(inputDisplayText, inputText);
 }
 
 /**
@@ -178,7 +184,6 @@ const updateInputDisplay = (inputText) => {
  */
 const updateOutputDisplay = (output) => {
 
-    outputDisplay.style.visibility = "visible"
 
     /**
      * @sample_output
@@ -212,20 +217,26 @@ const updateOutputDisplay = (output) => {
 
 const updateLoadingDisplay = (isLoading) => {
 
-
     if (isLoading) {
-        loadingDisplay.style.display = "inline";
+
+        labelsContainer.classList.add("fade-out");
+
+        labelsContainer.innerHTML = `
+        <div class="analyze_container">
+            <p>Analyzing</p>
+            <span class="loading-spinner"></span>
+        </div>
+    `;
+        labelsContainer.classList.remove("fade-out");
+
+
     } else {
-        loadingDisplay.style.display = "none";
     }
 }
 
 const updateOutputContainer = () => {
 
     const delay = 2000 // in miliseconds
-
-    inputDisplay.style.visibility = "hidden"
-    outputDisplay.style.visibility = "hidden"
 
     debug('loadingDisplay: ', loadingDisplay)
 
@@ -234,8 +245,7 @@ const updateOutputContainer = () => {
     // Fake loading for 1 second
     setTimeout(() => {
         updateLoadingDisplay(globalState.isLoading)
-        updateOutputDisplay(globalState.output)
-        // updateLabelsContainer(globalState.output)
+        updateLabelsContainer(globalState.output)
     }, delay)
 
 
@@ -305,7 +315,7 @@ submitButton.onclick = async (e) => {
     debug('wordCount is ', wordCount, ' so ')
 
 
-    if (!isValidWordCount(wordCount)) {
+    if (!isValidCharacterCount(wordCount)) {
         debug('dont submit input')
         return
     }
@@ -325,4 +335,3 @@ exampleSelector.oninput = () => {
     handleInputChange()
     debugGlobalState()
 }
-

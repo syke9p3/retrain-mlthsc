@@ -52,8 +52,8 @@
                     </span>
                     into the textbox below, and then press the "Analyze" button to
                     classify the content according to its relevant labels. Be aware that
-                    the system requires a minimum of <u>3 words</u> and accepts up to a
-                    maximum of <u>280 words</u>.
+                    the system requires a minimum of <u>3 characters</u> and accepts up to a
+                    maximum of <u>280 characters</u>.
                 </p>
 
             </div>
@@ -63,10 +63,7 @@
 
         <!-- Input Options (Text, Link, Upload File, Upload Image) -->
         <section class="input-set">
-            <div class="toaster">
-                <div id="model-status" class=""><span style="color:transparents">Press analyze to activate classifier.
-                    </span></div>
-            </div>
+
             <!-- Input Post Tab -->
             <article class="input-textbox" id="input-section">
                 <textarea type="text" id="input-text" placeholder="Enter hate speech" value=""></textarea>
@@ -103,10 +100,18 @@
                         <span id="word-count" class="dev" style="text-align: center; margin-right: 5px">
                             -
                         </span>
-                        <span class="word-limit"> / 280 Words</span>
+                        <span class="word-limit"> / 280 characters</span>
                     </div>
                 </div>
             </article>
+
+            <div class="" id="">
+                <div class="">
+                    <div class="toaster">
+                        <span id="model-status">Press <b>Analyze</b> to activate the classifier.</span>
+                    </div>
+                </div>
+            </div>
 
             <!-- Analyze and Clear Buttons -->
             <div class="btn-group flex">
@@ -121,16 +126,38 @@
             </div>
         </section>
 
-        <div id="output-container">
-            <div id="input-display"></div>
+        <section id="output-container">
+            <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
+                <h4 class="label-header">Input Text</h4>
+            </div>
+            <div class="input-display-container" id="input-display-container">
+                <div>
+                    <div class="input-display" id="input-display" style="transition: opacity 0.5s;">
+                        <div class="tweet-header">
+                            <div>
+                                <img src="assets/mlthsc.png" width="40px" alt="">
+                            </div>
+                            <div class="tweet-name">
+                                <h4 class="">MLTHSC</h4>
+                                <p>gap</p>
+                            </div>
+                        </div>
+                        <span id="input-display-text">
+                            Let's analyze Tagalog hate speech tweet according to Age, Gender, Physical, Race, Religion
+                            and Others.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <div id="loading-display" style="display: none;">Classifying text...</div>
             <div id="output-display"></div>
-        </div>
+        </section>
 
         <!-- Labels and Results Display Section -->
         <section id="label-section">
             <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
-                <h4 class="label-header">Labels</h4>
+                <h4 class="label-header">Hate Speech Categories</h4>
                 <button id="save-btn" class="btn btn-save">
                     <i class="bx bxs-save bx-xs"></i> Save
                 </button>
@@ -142,7 +169,7 @@
             <!-- No Labels Container (Displayed when no labels are identified) -->
             <div id="no-labels-container" style="display: none">
                 <div class="analyze_container result-fade-in">
-                    <p>No label identified, please add more words.</p>
+                    <p>No label identified, try changing the text.</p>
                 </div>
             </div>
 
@@ -332,7 +359,7 @@
 
     <!-- Footer -->
     <footer>
-        <article class="model-description">
+        <article class="flex model-description">
             <div>
                 <h4>
                     MULTILABEL CLASSIFICATION OF TAGALOG HATE SPEECH USING BIDIRECTIONAL
@@ -359,8 +386,8 @@
             </div>
         </article>
 
-        <article class="footer-bottom flex">
-            <p class="footer_size copyright">THESIS PASSERS &copy; 2024 <br /></p>
+        <article class="flex">
+            <p class="footer_size ">THESIS PASSERS &copy; 2024 <br /></p>
 
             <p class="footer_size footer-authors">
                 <span>Saya-ang</span> | <span>Gozum</span> | <span>Hamor</span> |

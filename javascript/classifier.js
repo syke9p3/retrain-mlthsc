@@ -14,6 +14,7 @@ const setModelStatus = (status) => {
 const initializeClassifier = async () => {
     try {
         setModelStatus("loading");
+
         classifier = await pipeline(
             'text-classification', // task
             'syke9p3/bert-multilabel-tagalog-hate-speech-classifier' // model
@@ -47,8 +48,5 @@ export const classify = async (inputText) => {
 
 
 }
-
-
-
 
 

@@ -340,10 +340,11 @@ textarea {
     /* max-width: 768px; */
 }
 
+/* REEEEE */
 .tweet-header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 11px;
 }
 
 .tweet-name h4 {

@@ -311,6 +311,14 @@ textarea {
     cursor: auto;
 }
 
+#input-display {
+    background-color: #202020;
+    color: var(--white);
+    padding: 1rem 1.5rem;
+    font-family: monospace;
+    line-height: 1.6;
+}
+
 /* Labels */
 .section-header {
     padding: 0 20px;
@@ -914,7 +922,7 @@ footer {
 }
 
 /* Toast */
-.toast {
+/* .toast {
     color: white;
     position: fixed;
     top: 20px;
@@ -925,11 +933,26 @@ footer {
     font-weight: bold;
     display: flex;
     align-items: center;
-    background-color: var(--white);
+    background-color: var(--accent);
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     opacity: 0;
     transform: translateX(-50%) translateY(-20px);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+} */
+
+.toaster {
+    color: white;
+    background-color: #202020;
+    padding: 10px 20px;
+    margin: 10px 0px;
+    /* font-weight: bold; */
+    opacity: 100;
+}
+
+.toaster.hide {
+    opacity: 0;
+    /* When the toast is hidden, set opacity to 0 */
     transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 

@@ -335,7 +335,7 @@ textarea {
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 8px;
+    gap: 100px;
     width: 100%;
     /* max-width: 768px; */
 }
@@ -343,7 +343,6 @@ textarea {
 .tweet-header {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .tweet-name h4 {
@@ -354,7 +353,7 @@ textarea {
 .tweet-name p {
     font-size: 12px;
     opacity: 50%;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 /* Labels */

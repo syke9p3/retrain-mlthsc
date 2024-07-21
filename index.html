@@ -40,20 +40,24 @@
                     Multilabel Tagalog Hate Speech Classifier
                 </h1>
                 <p class="text-secondary" id="input-post-description" style="display: block">
-                    Enter your
+                    Enter Tagalog
                     <span class="tooltip">
                         hate speech
                         <span class="tooltiptext">
                             Speech that promotes violence or discrimination against
                             individuals or groups based on attributes such as gender, race,
                             religion, physical appearance, disability, etc. that can lead to
-                            deterioration of ones health
+                            deterioration of ones health.
                         </span>
                     </span>
-                    into the textbox below, and then press the "Analyze" button to
-                    classify the content according to its relevant labels. Be aware that
-                    the system requires a minimum of <u>3 characters</u> and accepts up to a
-                    maximum of <u>280 characters</u>.
+                    text in the textbox below. Press the <b>Analyze</b> button to
+                    classify the hate speech according to <span class="tooltip">
+                        different categories
+                        <span class="tooltiptext">
+                            Age, Gender, Physical, Race, Religion, Others.
+                        </span>
+                    </span>. The classifier
+                    accepts a text input from <b>15 characters</b> up to <b>280 characters</b>.
                 </p>
             </div>
         </section>
@@ -169,9 +173,9 @@
         <section id="label-section">
             <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
                 <h4 class="label-header">Hate Speech Categories</h4>
-                <button id="save-btn" class="btn btn-save">
+                <!-- <button id="save-btn" class="btn btn-save">
                     <i class="bx bxs-save bx-xs"></i> Save
-                </button>
+                </button> -->
             </div>
 
             <textarea type="text" value="" style="display: none" id="extractedText" disabled></textarea>
@@ -228,7 +232,7 @@
         </section>
 
         <!-- Saved Posts Section -->
-        <section id="saved-post">
+        <!-- <section id="saved-post">
             <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
                 <h4>Saved Posts</h4>
                 <button id="export-btn" class="btn btn-save" title="Export to CSV">
@@ -246,17 +250,17 @@
                 <button class="filterButton" data-label="race">Race</button>
                 <button class="filterButton" data-label="religion">Religion</button>
                 <button class="filterButton" data-label="others">Others</button>
-            </div>
+            </div> -->
 
-            <!-- No posts Container (Displayed when no labels are identified) -->
-            <div id="no-posts-container" style="display: none">
+        <!-- No posts Container (Displayed when no labels are identified) -->
+        <!-- <div id="no-posts-container" style="display: none">
                 <div class="analyze_container result-fade-in">
                     <p>No posts saved.</p>
                 </div>
-            </div>
-
+            </div> -->
+        <!-- 
             <div id="savedPosts" class="posts-container"></div>
-            <div id="pagination-controls" class="pagination"></div>
+            <div id="pagination-controls" class="pagination"></div> -->
         </section>
 
         <!--  <!-- Stats --/>
@@ -280,142 +284,144 @@
             </div>
         </article> -->
 
-        <!-- Webapp Instructions Section -->
-        <section class="instruction">
-            <!-- Floating Dialog Box -->
-            <div class="floating-dialog">How can our tool help?</div>
 
-            <!-- Section Header -->
-            <div class="flex justify-between align-center section-header" style="padding: 10px; border: none"></div>
+    </main>
 
-            <!-- Tab Buttons for Instructions -->
-            <div class="flex tabs">
-                <button class="btn tab-inst inactive" id="instruction1-tab" data-tab="instruction1">
-                    How can hate speech analysis help you?
-                </button>
-                <button class="btn tab-inst inactive" id="instruction2-tab" data-tab="instruction2">
-                    How does hate speech analysis work?
-                </button>
-            </div>
-
-            <!-- Inst 1 Tab -->
-            <article id="instruction1Section" style="display: none">
-                <div class="tab-content">
-                    <!-- Content for Instruction 1 -->
-                    <ul>
-                        <li>
-                            Gain a
-                            <span class="tooltip">
-                                summary
-                                <span class="tooltiptext">
-                                    In context, summary refers to what the hate speech is about,
-                                    including its various forms.
-                                </span>
-                            </span>
-                            of the issue.
-                        </li>
-                        <li>
-                            Recognize
-                            <span class="tooltip">
-                                patterns
-                                <span class="tooltiptext">
-                                    Determining patterns in the spread of hateful content is
-                                    essential as it provides numbers or statistics.
-                                </span>
-                            </span>
-                            in the prevalence of issues
-                        </li>
-                        <li>
-                            Swiftly identify and detect
-                            <span class="tooltip">
-                                instances
-                                <span class="tooltiptext">
-                                    Detecting instances of labels per post allows the users to
-                                    determine what actions must be taken.
-                                </span>
-                            </span>
-                            , allowing for immediate action.
-                        </li>
-                    </ul>
+    <div class="faq-container">
+        <section class="faq-section container">
+            <article class="faq">
+                <div class="qna">
+                    <h2>What is MLTHSC?</h2>
+                    <p>
+                        Multilabel Tagalog Hate Speech Classifier (MLTHSC) is a free to use AI-powered tool designed to
+                        classify hate speech in Tagalog text according to Age, Gender, Physical, Race, Religion, and
+                        Other categories. It uses a fine-tuned Tagalog Bidirectional Encoder Representation from
+                        Transformers (BERT) model to analyze text and a linear neural network to identify various
+                        categories of hate speech.
+                    </p>
                 </div>
             </article>
-
-            <!-- Inst 2 Tab -->
-            <article id="instruction2Section" style="display: none">
-                <div class="tab-content">
-                    <!-- Content for Instruction 2 -->
+            <!-- <div class="qna">
+                    <h2>Why MLTHSC is useful?</h2>
                     <p>
-                        Simply provide or upload your
-                        <span class="tooltip">
-                            sample data
-                            <span class="tooltiptext">
-                                Sample data could in the form of plain text, Reddit link,
-                                image, and text file.
-                            </span>
-                        </span>
-                        , and we will handle the rest. Our
-                        <span class="tooltip">
-                            AI algorithm
-                            <span class="tooltiptext">
-                                Bidirectional Encoder Representations from Transformer (BERT)
-                            </span>
-                        </span>
-                        will swiftly help you in understanding your data within a few
-                        minutes.
+                        Multilabel Tagalog Hate Speech Classifier (MLTHSC) is a free to use AI-powered tool designed to
+                        classify hate speech in Tagalog text according to Age, Gender, Physical, Race, Religion, and
+                        Other categories. It uses a fine-tuned Tagalog Bidirectional Encoder Representation from
+                        Transformers (BERT) model to analyze text and a linear neural network to identify various
+                        categories of hate speech.
+                    </p>
+                </div> -->
+            </article>
+            <article class="faq">
+                <div class="qna">
+                    <h2>What types of hate speech can MLTHSC detect?</h2>
+                    <p>
+                        MLTHSC can detect hate speech across the following categories:
+
+                    <ul class="faq-categories">
+                        <li class="age">
+                            <!-- <icon>⏳</icon> -->
+                            <icon><i class='bx bx-hourglass'></i></icon>
+
+                            <h4 style="background-color: var(--out-age)">Age</h4>
+                            <p>Target of hate speech pertains to one's age bracket or demographic</p>
+                        </li>
+                        <li class="gender">
+                            <!-- <icon>🚻</icon> -->
+
+                            <icon><i class='bx bx-male-female'></i></icon>
+                            <h4 style="background-color: var(--out-gender)">Gender</h4>
+                            <p>Target of hate speech pertains to gender identity, sex, or sexual orientation</p>
+                        </li>
+                        <li class="physical">
+                            <!-- <icon>🎭</icon> -->
+                            <icon><i class='bx bxs-face'></i></icon>
+                            <h4 style="background-color: var(--out-physical)">Physical</h4>
+                            <p>Target of hate speech pertains to physical attributes or disabilities</p>
+                        </li>
+                        <li class="race">
+                            <!-- <icon>🧑🏿‍🤝‍🧑🏼</icon> -->
+                            <!-- <icon>          <icon><i class='bx bx-palette' ></i></icon></icon> -->
+                            <icon><i class='bx bxs-palette'></i></icon>
+                            </icon>
+                            <h4 style="background-color: var(--out-race)">Race</h4>
+                            <p>Target of hate speech pertains to racial background, ethnicity, or nationality</p>
+                        </li>
+                        <li class="religion">
+                            <!-- <icon>📿</icon> -->
+                            <icon><i class='bx bx-plus-medical'></i></icon>
+                            <h4 style="background-color: var(--out-religion)">Religion</h4>
+                            <p>Target of hate speech pertains to affiliation, belief, and faith to any of the existing
+                                religious or non-religious groups</p>
+                        </li>
+                        <li class="others">
+                            <!-- <icon>❓</icon> -->
+                            <icon><i class='bx bxs-balloon'></i></icon>
+                            <h4 style="background-color: var(--out-other)">Others</h4>
+                            <p>Target of hate speech pertains other topic that is not relevant as Age, Gender, Physical,
+                                Race, or Religion</p>
+                        </li>
+                    </ul>
                     </p>
                 </div>
             </article>
         </section>
-    </main>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <article class="flex model-description">
-            <div>
-                <h4>
-                    MULTILABEL CLASSIFICATION OF TAGALOG HATE SPEECH USING BIDIRECTIONAL
-                    ENCODER REPRESENTATIONS FROM TRANSFORMERS (BERT)
-                </h4>
-                <p class="footer_size">
-                    MLTHSC employs Bidirectional Encoder Representations from
-                    Transformer (BERT) to analyze text and categorize hate speech in
-                    Tagalog across multiple labels. The classifier discerns hateful
-                    content related to age, gender, race, religion, physical attributes,
-                    and other categories, enhancing the identification, and
-                    understanding of diverse forms of harmful speech.
+    <!-- Webapp Instructions Section -->
+    <section class="instruction">
+        <!-- Floating Dialog Box -->
+
+        <!-- Section Header -->
+        <div class="flex justify-between align-center section-header" style="padding: 10px; border: none"></div>
+
+        <!-- Footer -->
+        <footer>
+            <article class="flex model-description">
+                <div>
+                    <h4>
+                        MLTHSC: MULTILABEL TAGALOG HATE SPEECH CLASSIFIER
+                    </h4>
+                    <p class="footer_size">
+                        MLTHSC employs Bidirectional Encoder Representations from
+                        Transformer (BERT) to analyze text and categorize hate speech in
+                        Tagalog across multiple labels. The classifier discerns hateful
+                        content related to age, gender, race, religion, physical attributes,
+                        and other categories, enhancing the identification, and
+                        understanding of diverse forms of harmful speech.
+                    </p>
+                </div>
+
+                <div>
+                    <h4>DISCLAIMER</h4>
+                    <p class="footer_size">
+                        This website does not collect any user credentials. In the event
+                        that data is saved, it is stored only in the local storage of your
+                        device, ensuring your information remains secure and within your
+                        control.
+                    </p>
+                </div>
+            </article>
+
+            <article class="flex">
+                <p class="footer_size ">THESIS PASSERS &copy; 2024 <br /></p>
+
+                <p class="footer_size footer-authors">
+                    <span>Saya-ang</span> | <span>Gozum</span> | <span>Hamor</span> |
+                    <span>Mabansag</span>
                 </p>
-            </div>
+            </article>
+        </footer>
 
-            <div>
-                <h4>DISCLAIMER</h4>
-                <p class="footer_size">
-                    This website does not collect any user credentials. In the event
-                    that data is saved, it is stored only in the local storage of your
-                    device, ensuring your information remains secure and within your
-                    control.
-                </p>
-            </div>
-        </article>
+        <!-- JavaScript Files -->
+        <!-- <script src="./frontend/stls2.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <article class="flex">
-            <p class="footer_size ">THESIS PASSERS &copy; 2024 <br /></p>
+        <!-- <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js"></script> -->
 
-            <p class="footer_size footer-authors">
-                <span>Saya-ang</span> | <span>Gozum</span> | <span>Hamor</span> |
-                <span>Mabansag</span>
-            </p>
-        </article>
-    </footer>
-
-    <!-- JavaScript Files -->
-    <!-- <script src="./frontend/stls2.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js"></script> -->
-
-    <script src="app.js" type="module"></script>
-    <!-- <script src="./scripts/saveToLocalStorage.js"></script> -->
-    <!-- <script src="./scripts/script.js"></script> -->
+        <script src="app.js" type="module"></script>
+        <!-- <script src="./scripts/saveToLocalStorage.js"></script> -->
+        <!-- <script src="./scripts/script.js"></script> -->
 </body>
 
 <div id="toast-container"></div>

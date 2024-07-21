@@ -14,6 +14,7 @@ const submitButton = document.getElementById("analyze-btn");
 const clearButton = document.getElementById("clear-btn");
 const exampleSelector = document.getElementById("sample-hate-speech");
 const wordCountDisplay = document.getElementById("word-count");
+const labelsSection = document.getElementById("label-section");
 const labelsContainer = document.getElementById("labels-container");
 const outputContainer = document.getElementById("output-container");
 const inputDisplayContainer = document.getElementById("input-display-container");
@@ -262,6 +263,7 @@ const updateOutputContainer = () => {
     setTimeout(() => {
         updateLoadingDisplay(globalState.isLoading)
         updateLabelsContainer(globalState.output)
+        labelsSection.scrollIntoView({ behavior: "smooth" });
     }, delay)
 
 

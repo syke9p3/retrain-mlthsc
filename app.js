@@ -144,8 +144,7 @@ const updateModelStatus = (status) => {
     if (status === "loading") {
         modelStatusDisplay.innerHTML = `<span class="loading-spinner"> </span>Loading classifier (will load only once)`;
     } else if (status === "ready") {
-        modelStatusDisplay.textContent = "👍 Classifier is up and running.";
-        modelStatusDisplay.textContent = "";
+        modelStatusDisplay.textContent = "👍 Classifier is up and running";
     } else if (status === "error") {
         modelStatusDisplay.textContent = "Error loading classifier";
     } else {
@@ -275,7 +274,7 @@ clearButton.onclick = (e) => {
     // TEST: should reset the exampleOptions to default
     // TEST: should reset word count
 
-    inputField.scrollIntoView({ behavior: "smooth" });
+    // inputField.scrollIntoView({ behavior: "smooth" });
 
     inputField.value = "";
     updateInput()
@@ -290,7 +289,6 @@ clearButton.onclick = (e) => {
  */
 const handleSubmitInput = async (input) => {
 
-    outputContainer.scrollIntoView({ behavior: "smooth" });
 
     // TEST: should get output from the classifier if successful
     // TEST: should display output to the UI
@@ -301,7 +299,8 @@ const handleSubmitInput = async (input) => {
         updateModelStatus(modelStatus)
         debug('model status: ', modelStatus)
         const output = await classify(globalState.input)
-        updateModelStatus(modelStatus)
+        outputContainer.scrollIntoView({ behavior: "smooth" });
+        updateModelStatus("ready")
         setGlobalPrevInput(globalState.input);
 
         debug("prev input:", globalState.prevInput)

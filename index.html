@@ -32,10 +32,10 @@
     </header>
 
     <!-- Main Content Section -->
-    <main class="container bg-white" id="main-container">
+    <main class="container " id="main-container">
         <!-- Introduction and Instructions -->
         <section>
-            <div class="fixed text-center">
+            <div class="fixed">
                 <h1 class="banner-title">
                     Multilabel Tagalog Hate Speech Classifier
                 </h1>
@@ -52,9 +52,9 @@
                     </span>
                     text in the textbox below. Press the <b>Analyze</b> button to
                     classify the hate speech according to <span class="tooltip">
-                        different categories
+                        <a href="#faq-categories">different categories</a>
                         <span class="tooltiptext">
-                            Age, Gender, Physical, Race, Religion, Others.
+                            Age, Gender, Physical, Race, Religion, Others. Click here to learn more.
                         </span>
                     </span>. The classifier
                     accepts a text input from <b>15 characters</b> up to <b>280 characters</b>.
@@ -115,25 +115,25 @@
                 </div>
             </article>
 
-            <div class="" id="">
-                <div class="">
-                    <div class="toaster">
-                        <span id="model-status">Press <b>Analyze</b> to activate the classifier.</span>
-                    </div>
+            <div class="toolbar">
+
+                <!-- Analyze and Clear Buttons -->
+                <div class="btn-group">
+                    <!-- Button for Input Post and Upload File -->
+                    <button id="analyze-btn" disabled class="btn btn-options btn-analyze">
+                        <i class="bx bx-send"></i> Classify
+                    </button>
+
+                    <button id="clear-btn" class="btn btn-options btn-clear">
+                        <i class="bx bxs-tag-x"></i> Clear
+                    </button>
                 </div>
+                <div class="toaster">
+                    <span id="model-status">Press <b>Classify</b> to activate the hate speech classifier.</span>
+                </div>
+
             </div>
 
-            <!-- Analyze and Clear Buttons -->
-            <div class="btn-group flex">
-                <!-- Button for Input Post and Upload File -->
-                <button id="analyze-btn" disabled class="btn btn-options btn-analyze">
-                    Analyze <i class="bx bx-send"></i>
-                </button>
-
-                <button id="clear-btn" class="btn btn-options btn-clear">
-                    Clear <i class="bx bxs-tag-x"></i>
-                </button>
-            </div>
         </section>
 
         <section id="output-container">
@@ -288,11 +288,11 @@
     </main>
 
     <div class="faq-container">
-        <section class="faq-section container">
+        <section class="faq-sections">
             <article class="faq">
-                <div class="qna">
+                <div class="qna" style="padding: 48px 24px;">
                     <h2>What is MLTHSC?</h2>
-                    <p>
+                    <p style="max-width: 768px;">
                         Multilabel Tagalog Hate Speech Classifier (MLTHSC) is a free to use AI-powered tool designed to
                         classify hate speech in Tagalog text according to Age, Gender, Physical, Race, Religion, and
                         Other categories. It uses a fine-tuned Tagalog Bidirectional Encoder Representation from
@@ -300,19 +300,34 @@
                         categories of hate speech.
                     </p>
                 </div>
+
             </article>
-            <!-- <div class="qna">
+            <!-- <article class="faq">
+                <div class="qna" style="background-color: white; padding: 48px 24px;">
                     <h2>Why MLTHSC is useful?</h2>
-                    <p>
-                        Multilabel Tagalog Hate Speech Classifier (MLTHSC) is a free to use AI-powered tool designed to
-                        classify hate speech in Tagalog text according to Age, Gender, Physical, Race, Religion, and
-                        Other categories. It uses a fine-tuned Tagalog Bidirectional Encoder Representation from
-                        Transformers (BERT) model to analyze text and a linear neural network to identify various
-                        categories of hate speech.
-                    </p>
-                </div> -->
-            </article>
-            <article class="faq">
+                    <ul class="faq-features">
+                        <li>
+                            <h3>Automated Detection</h3>
+                            <p>Automatically </p>
+                        </li>
+                        <li>
+                            <h3>Tagalog Language-Specific</h3>
+                            <p></p>
+                        </li>
+                        <li>
+                            <h3>Multilabel Classification</h3>
+                            <p>Current hate speech detection models available for Tagalog hate speech text mostly focus
+                                on
+                                detecting the presence of hate in texts but not on providing fine-grained
+                                categorization.
+                                Hate
+                                speech is a complex phenomenon that may vary in themes and platforms
+                                may require a different response or intervention for various targeted groups.</p>
+                        </li>
+                    </ul>
+                </div>
+            </article> -->
+            <article class="faq" id="faq-categories">
                 <div class="qna">
                     <h2>What types of hate speech can MLTHSC detect?</h2>
                     <p>
@@ -322,13 +337,14 @@
                         <li class="age">
                             <!-- <icon>⏳</icon> -->
                             <icon><i class='bx bx-hourglass'></i></icon>
-
-                            <h4 style="background-color: var(--out-age)">Age</h4>
-                            <p>Target of hate speech pertains to one's age bracket or demographic</p>
+                            <div>
+                                <h4 style="background-color: var(--out-age)">Age</h4>
+                                <p style="padding: 1rem; padding-bottom: 0rem">Target of hate speech
+                                    pertains to one's age bracket or demographic</p>
+                            </div>
                         </li>
                         <li class="gender">
                             <!-- <icon>🚻</icon> -->
-
                             <icon><i class='bx bx-male-female'></i></icon>
                             <h4 style="background-color: var(--out-gender)">Gender</h4>
                             <p>Target of hate speech pertains to gender identity, sex, or sexual orientation</p>
@@ -337,15 +353,17 @@
                             <!-- <icon>🎭</icon> -->
                             <icon><i class='bx bxs-face'></i></icon>
                             <h4 style="background-color: var(--out-physical)">Physical</h4>
-                            <p>Target of hate speech pertains to physical attributes or disabilities</p>
+                            <p>Target of hate speech pertains to physical attributes or
+                                disabilities</p>
                         </li>
                         <li class="race">
                             <!-- <icon>🧑🏿‍🤝‍🧑🏼</icon> -->
                             <!-- <icon>          <icon><i class='bx bx-palette' ></i></icon></icon> -->
                             <icon><i class='bx bxs-palette'></i></icon>
                             </icon>
-                            <h4 style="background-color: var(--out-race)">Race</h4>
-                            <p>Target of hate speech pertains to racial background, ethnicity, or nationality</p>
+                            <h4 style="background-color: var(--out-race);">Race</h4>
+                            <p>Target of hate speech pertains to racial background, ethnicity,
+                                or nationality</p>
                         </li>
                         <li class="religion">
                             <!-- <icon>📿</icon> -->

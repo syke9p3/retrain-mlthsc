@@ -358,7 +358,7 @@ textarea {
     margin-top: 10px;
 }
 
-#input-display-date {
+.input-display-date {
     font-size: 12px;
     opacity: 70%;
     display: flex;

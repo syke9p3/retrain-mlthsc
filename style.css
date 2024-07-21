@@ -303,7 +303,6 @@ textarea {
     color: inherit;
 }
 
-
 .btn-extract,
 .btn-analyze {
     background-color: #3A36E4;
@@ -1089,7 +1088,8 @@ footer {
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 300px;
+    width: 200px;
+
     background-color: #000;
     /* box-shadow: ; */
     color: #fff;
@@ -1104,6 +1104,11 @@ footer {
     opacity: 0;
     transition: opacity 0.3s;
     font-size: 12px;
+
+    @media screen and (min-width: 600px) {
+        width: 300px;
+
+    }
 }
 
 .dark-mode .tooltiptext {
@@ -1569,7 +1574,6 @@ footer {
     /* modal container fixed across whole screen */
     position: fixed;
     inset: 0;
-
 
     /* z-index must be higher than everything else on the page */
     z-index: 10000;

@@ -302,17 +302,21 @@
                 </div>
 
             </article>
+
             <!-- <article class="faq">
                 <div class="qna" style="background-color: white; padding: 48px 24px;">
                     <h2>Why MLTHSC is useful?</h2>
                     <ul class="faq-features">
+                        <p> Hate speech rising social media. contribute to the deterioration of an individual’s mental health,
+fueling feelings of worthlessness, depression, anxiety, and isolation. Contibute to improved approach for platform moderators through</p>
                         <li>
                             <h3>Automated Detection</h3>
-                            <p>Automatically </p>
+                            <p>Automatically categgorize Tagalog hate speech across various categories with a click of a button. Given the large volume of malicious content posted online, manual efforts in detecting and reporting hate speech is becoming
+increasingly tedious task for moderators, that's why.</p>
                         </li>
                         <li>
                             <h3>Tagalog Language-Specific</h3>
-                            <p></p>
+                            <p>The Philippines - growing in social media landscape more users, along this the proliferation of hate speen in Filipino social media landscape especially during election thats why need Fil-based language specific tools. We also aim to address/contribute low-resourced Filipino</p>
                         </li>
                         <li>
                             <h3>Multilabel Classification</h3>
@@ -383,6 +387,31 @@
                     </p>
                 </div>
             </article>
+            <article class="faq">
+                <div class="qna" style="padding: 48px 24px;">
+                    <h2>How does MLTHSC work?</h2>
+                    <p style="max-width: 768px;">
+                        MLTHSC is uses a machine learning model based on the BERT architecture fine-tuned on Tagalog
+                        hate speech data. When you input text and press the Classify button, the <span class="tooltip">
+                            quantized model
+                            <span class="tooltiptext">
+                                We used a quantized model for this demo because loading the original model would take
+                                time to load and perform classifications due to its larger size (500+ mb). The model
+                                being quantized means its size was reduced (100+ mb) so that it load and perform faster
+                                inference on phones while maintaining
+                                similar albeit reduced accuracy as the original.
+                            </span>
+                        </span> (hosted on <a
+                            href="https://huggingface.co/syke9p3/bert-multilabel-tagalog-hate-speech-classifier"
+                            target="_blank" style="color: #424BFC;">Hugging Face <i
+                                class='bx bx-link-external'></i></a>)
+                        will process the text and
+                        outputs the probability scores for
+                        each hate speech category. For this demo, we used a 30% threshold to determine if a category is
+                        present in the hate speech text.
+                    </p>
+                </div>
+            </article>
         </section>
     </div>
 
@@ -413,9 +442,9 @@
                 <div>
                     <h4>DISCLAIMER</h4>
                     <p class="footer_size">
-                        This website does not collect any user credentials. In the event
-                        that data is saved, it is stored only in the local storage of your
-                        device, ensuring your information remains secure and within your
+                        This website does not collect any user credentials. When an output is saved, it is stored only
+                        in the localstorage of your
+                        browser's device, so your information remains secure and within your
                         control.
                     </p>
                 </div>

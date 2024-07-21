@@ -358,6 +358,14 @@ textarea {
     margin-top: 10px;
 }
 
+#input-display-date {
+    font-size: 12px;
+    opacity: 70%;
+    display: flex;
+    display: none;
+    gap: 5px;
+}
+
 /* Labels */
 .section-header {
     padding: 0 20px;

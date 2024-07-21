@@ -1,5 +1,5 @@
 import { classify, modelStatus } from "./javascript/classifier.js"
-import { countCharacters, isValidCharacterCount, typeWriter, updateLabelsContainer } from "./javascript/utils.js"
+import { countCharacters, generateDate, getDate, getTime, isValidCharacterCount, typeWriter, updateLabelsContainer } from "./javascript/utils.js"
 
 export const globalState = {
     prevInput: '',
@@ -15,9 +15,13 @@ const clearButton = document.getElementById("clear-btn");
 const exampleSelector = document.getElementById("sample-hate-speech");
 const wordCountDisplay = document.getElementById("word-count");
 const labelsContainer = document.getElementById("labels-container");
+const outputContainer = document.getElementById("output-container");
 const inputDisplayContainer = document.getElementById("input-display-container");
 const inputDisplay = document.getElementById("input-display");
 const inputDisplayText = document.getElementById("input-display-text");
+const inputDisplayDate = document.getElementById("input-display-date");
+const tweetTime = document.getElementById("tweet-time");
+const tweetDate = document.getElementById("tweet-date");
 const outputDisplay = document.getElementById("output-display");
 const loadingDisplay = document.getElementById("loading-display");
 const modelStatusDisplay = document.getElementById("model-status");
@@ -153,17 +157,27 @@ const setInputFieldValue = (text) => {
 }
 
 const updateSubmitButtonState = () => {
-    const wordCount = globalState.wordCount;
-    const prevInput = globalState.prevInput;
 
-    console.group("updateSubmitButtonState: ")
-    console.log("wordcount: ", wordCount)
-    console.log("prevInput: ", prevInput)
-    console.groupEnd()
+    // console.group("updateSubmitButtonState: ")
+    // console.log("wordcount: ", wordCount)
+    // console.log("prevInput: ", prevInput)
+    // console.groupEnd()
 
     // Disable the submit button if input is invalid or data is being fetched
-    submitButton.disabled = !isValidCharacterCount(wordCount) || globalState.isLoading || globalState.prevInput === inputField.value;
+    submitButton.disabled = !isValidCharacterCount(globalState.wordCount) || globalState.isLoading || globalState.prevInput === inputField.value;
 };
+
+const displayDateToInputDisplay = () => {
+    const newDate = generateDate();
+    const time = getTime(newDate);
+    const date = getDate(newDate);
+
+    tweetTime.textContent = time;
+    tweetDate.textContent = date;
+
+    inputDisplayDate.style.display = "flex";
+
+}
 
 /**
  * Takes a string and displays it to the input display in output UI.
@@ -175,6 +189,9 @@ const updateInputDisplay = (inputText) => {
     inputDisplayContainer.style.display = "grid"
     // inputDisplayText.textContent = inputText
     typeWriter(inputDisplayText, inputText);
+    displayDateToInputDisplay();
+
+
 }
 
 /**
@@ -230,7 +247,6 @@ const updateLoadingDisplay = (isLoading) => {
         labelsContainer.classList.remove("fade-out");
 
 
-    } else {
     }
 }
 
@@ -257,6 +273,8 @@ clearButton.onclick = (e) => {
     // TEST: should reset the exampleOptions to default
     // TEST: should reset word count
 
+    inputField.scrollIntoView({ behavior: "smooth" });
+
     inputField.value = "";
     updateInput()
     exampleSelector.selectedIndex = 0;
@@ -269,6 +287,8 @@ clearButton.onclick = (e) => {
  * Takes the input from the global state and updates the UI accordingly
  */
 const handleSubmitInput = async (input) => {
+
+    outputContainer.scrollIntoView({ behavior: "smooth" });
 
     // TEST: should get output from the classifier if successful
     // TEST: should display output to the UI
@@ -335,3 +355,27 @@ exampleSelector.oninput = () => {
     handleInputChange()
     debugGlobalState()
 }
+
+
+/** TODO
+ * @TODO set title attribute to analyzeBtn on hover when same prevInput and input
+ * @TODO date and time to post
+ * @TODO save results to local storage 
+ * @TODO retrieve from local storage and display to UI 
+ * @TODO filter results
+ * @TODO pagination
+ * @TODO count and graph results 
+ * @TODO export as csv 
+ * @TODO dark mode
+ * @TODO guide below as an article
+ * @TODO description for the labels with icons/emoji (take from github readme)
+ */
+
+/** FEATURES
+ * @FEAT input text 
+ * @FEAT hate speech examples 
+ * @FEAT word counter 
+ * @FEAT clear input field 
+ * @FEAT post like display 
+ * @FEAT hate speech categories display 
+ */

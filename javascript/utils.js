@@ -14,7 +14,7 @@ export function countCharacters(text) {
  */
 export const isValidCharacterCount = (count) => {
     // debug(count, ' is ' '<= 3', ' which is ', count <= 3)
-    return count >= 3 && count <= 280;
+    return count >= 15 && count <= 280;
 }
 
 

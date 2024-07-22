@@ -507,17 +507,27 @@ textarea {
 }
 
 .analyze_container {
-    text-align: center;
+    /* text-align: center; */
     height: 250px;
     display: flex;
+    gap: 8px;
     align-items: center;
     justify-content: center;
+}
+
+.analyze_container .logo-spin {
+    width: 24px;
+    /* padding: 5px; */
+}
+
+.logo-spin {
+    animation: spin 1s linear infinite;
 }
 
 .analyze_container p {
     margin-right: 10px;
     color: var(--in-other);
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .loading-spinner {
@@ -542,18 +552,22 @@ textarea {
 }
 
 @keyframes fadeIn {
-    from {
+    0% {
         opacity: 0;
     }
 
-    to {
+    75% {
+        opacity: 0;
+    }
+
+    100% {
         opacity: 1;
     }
 }
 
 
 .fade-in {
-    animation: fadeIn 1s ease;
+    animation: fadeIn 2s ease-in-out;
 }
 
 
@@ -1709,4 +1723,55 @@ footer article {
     /* padding: px; */
     /* transform: translateY(105%); */
     border: 2px solid;
+}
+
+.logo-spin {}
+
+.loading-ellipse:after {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+    animation: ellipsis steps(4, end) 1s infinite;
+    content: "\2026";
+    /* ascii code for the ellipsis character */
+    width: 0px;
+}
+
+@keyframes ellipsis {
+    to {
+        width: 1.25em;
+    }
+}
+
+
+.color-change {
+    animation: color-change 4s linear infinite;
+}
+
+
+@keyframes color-change {
+    0% {
+        color: var(--out-age);
+    }
+
+    25% {
+        color: var(--out-gender);
+    }
+
+    33% {
+        color: var(--out-physical);
+    }
+
+    50% {
+        color: var(--out-race);
+    }
+
+    75% {
+        color: var(--out-religion);
+    }
+
+    100% {
+        color: var(--out-other);
+    }
 }

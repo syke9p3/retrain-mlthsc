@@ -42,6 +42,10 @@ export const getDate = (date) => {
     return `${day} ${monthNames[monthIndex]} ${year}`;
 }
 
+export function isSmallScreenSize() {
+    return window.innerWidth <= 768;
+}
+
 
 debug("output.js")
 

@@ -87,7 +87,7 @@
                                 value="bading tangina ka masahol ka pa sa hayop na feeling banal catholic fuckers kahoy lang yang sinasamba nyo">
                                 Example 1
                             </option>
-                            <option value="tangina kang panget na hapon ka ang baho mo pang gago ka pakyu">
+                            <option value="tangina kang panget na intsik ka ang baho mo pang gago ka pakyu">
                                 Example 2
                             </option>
                             <option
@@ -287,10 +287,11 @@
 
     </main>
 
-    <div class="faq-container">
+    <div class="faq-container bg-white">
         <section class="faq-sections">
             <article class="faq">
-                <div class="qna" style="padding: 48px 24px;">
+                <div class="qna" style="padding: 24px 24px 48px 0;">
+                    <img src="assets/mlthsc.png" alt="" width="40">
                     <h2>What is MLTHSC?</h2>
                     <p style="max-width: 768px;">
                         Multilabel Tagalog Hate Speech Classifier (MLTHSC) is a free to use AI-powered tool designed to
@@ -331,7 +332,7 @@ increasingly tedious task for moderators, that's why.</p>
                     </ul>
                 </div>
             </article> -->
-            <article class="faq" id="faq-categories">
+            <article class="faq" id="faq-categories" style="background-color: #F4F7FC;">
                 <div class="qna">
                     <h2>What types of hate speech can MLTHSC detect?</h2>
                     <p>
@@ -391,7 +392,7 @@ increasingly tedious task for moderators, that's why.</p>
                 <div class="qna" style="padding: 48px 24px;">
                     <h2>How does MLTHSC work?</h2>
                     <p style="max-width: 768px;">
-                        MLTHSC is uses a machine learning model based on the BERT architecture fine-tuned on Tagalog
+                        MLTHSC uses a machine learning model based on the BERT architecture fine-tuned on Tagalog
                         hate speech data. When you input text and press the Classify button, the <span class="tooltip">
                             quantized model
                             <span class="tooltiptext">
@@ -406,7 +407,7 @@ increasingly tedious task for moderators, that's why.</p>
                             target="_blank" style="color: #424BFC;">Hugging Face <i
                                 class='bx bx-link-external'></i></a>)
                         will process the text and
-                        outputs the probability scores for
+                        output the probability scores for
                         each hate speech category. For this demo, we used a 30% threshold to determine if a category is
                         present in the hate speech text.
                     </p>

@@ -1,5 +1,5 @@
 import { classify, modelStatus } from "./javascript/classifier.js"
-import { countCharacters, generateDate, getDate, getTime, isValidCharacterCount, typeWriter, updateLabelsContainer } from "./javascript/utils.js"
+import { countCharacters, generateDate, getDate, getTime, isSmallScreenSize, isValidCharacterCount, typeWriter, updateLabelsContainer } from "./javascript/utils.js"
 
 export const globalState = {
     prevInput: '',
@@ -240,8 +240,8 @@ const updateLoadingDisplay = (isLoading) => {
 
         labelsContainer.innerHTML = `
         <div class="analyze_container">
-            <p>Analyzing</p>
-            <span class="loading-spinner"></span>
+            <img src="assets/mlthsc.png" class="logo-spin">
+            <p class="">Analyzing</p>
         </div>
     `;
         labelsContainer.classList.remove("fade-out");
@@ -262,7 +262,10 @@ const updateOutputContainer = () => {
     setTimeout(() => {
         updateLoadingDisplay(globalState.isLoading)
         updateLabelsContainer(globalState.output)
-        labelsSection.scrollIntoView({ behavior: "smooth" });
+
+        if (isSmallScreenSize()) {
+            labelsSection.scrollIntoView({ behavior: "smooth" });
+        }
     }, delay)
 
 
@@ -299,7 +302,9 @@ const handleSubmitInput = async (input) => {
         updateModelStatus(modelStatus)
         debug('model status: ', modelStatus)
         const output = await classify(globalState.input)
+
         outputContainer.scrollIntoView({ behavior: "smooth" });
+
         updateModelStatus("ready")
         setGlobalPrevInput(globalState.input);
 

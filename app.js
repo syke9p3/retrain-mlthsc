@@ -1,5 +1,7 @@
+import { createSavedPost, generateSavedPostsComponent, SavedPostsDatabase, saveToLocalStorage } from "./javascript/saving.js";
+import { convertToPercent, countCharacters, generateDate, getDate, getTime, isSmallScreenSize, isValidCharacterCount, typeWriter } from "./javascript/utils.js"
 import { classify, modelStatus } from "./javascript/classifier.js"
-import { countCharacters, generateDate, getDate, getTime, isSmallScreenSize, isValidCharacterCount, typeWriter, updateLabelsContainer } from "./javascript/utils.js"
+import { SAVED_POSTS_LS_KEY } from "./javascript/constants.js";
 
 export const globalState = {
     prevInput: '',
@@ -7,6 +9,7 @@ export const globalState = {
     output: '',
     isLoading: false,
     wordCount: 0,
+    lastSavedPost: {}
 }
 
 const inputField = document.getElementById("input-text");
@@ -26,6 +29,10 @@ const tweetDate = document.getElementById("tweet-date");
 const outputDisplay = document.getElementById("output-display");
 const loadingDisplay = document.getElementById("loading-display");
 const modelStatusDisplay = document.getElementById("model-status");
+const saveBtn = document.getElementById("save-btn");
+const exportButton = document.getElementById("export-btn");
+const savedPostsSection = document.getElementById("saved-post-section");
+const savedPostsContainer = document.getElementById("saved-posts");
 
 export function debug(...args) {
     // console.log(...args);
@@ -66,11 +73,56 @@ const setGlobalIsLoading = (bool) => {
     globalState.isLoading = bool;
 }
 
+const setGlobalLastSavedPost = (savedPost) => {
+    globalState.lastSavedPost = savedPost;
+}
+
+
+
 // initialize global states
 const initializeGlobalState = () => {
     setGlobalInput(inputField.value)
     setGlobalWordCount(getWordCountFromInputField());
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    initializeGlobalState();
+    debug('globalState.input: ', globalState.input)
+    debug('globalState.wordCount: ', globalState.wordCount)
+
+    updateWordCountDisplay(globalState.wordCount)
+    updateSubmitButtonState()
+
+    inputField.oninput = (e) => {
+        debug(e.target.value)
+        debug(getWordCountFromInputField())
+        handleInputChange()
+        updateSubmitButtonState()
+    }
+
+    // Initialize Database
+    const db = new SavedPostsDatabase(SAVED_POSTS_LS_KEY)
+
+    // Get content of localstorage
+    db.initializeSavedPosts()
+
+    try {
+        const firstPost = db.getSavedPostByIndex(1)
+        savedPostsContainer.innerHTML += generateSavedPostsComponent(firstPost);
+    } catch (e) {
+        console.log('e: ', e)
+    }
+
+    // render savedPosts container
+    // renderSavedPostsComponent();
+    savedPostsContainer.innerHTML = db.generateSavedPostsComponent()
+
+});
+
+const renderSavedPostsComponent = () => {
+}
+
 
 /**
  * Sync UI and global state for word count
@@ -92,23 +144,6 @@ const handleInputChange = () => {
     updateSubmitButtonState()
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    initializeGlobalState();
-    debug('globalState.input: ', globalState.input)
-    debug('globalState.wordCount: ', globalState.wordCount)
-
-    updateWordCountDisplay(globalState.wordCount)
-    updateSubmitButtonState()
-
-    inputField.oninput = (e) => {
-        debug(e.target.value)
-        debug(getWordCountFromInputField())
-        handleInputChange()
-        updateSubmitButtonState()
-    }
-
-});
 
 /**
  * Counts and returns the number of words from value of inputField  
@@ -140,6 +175,8 @@ const updateWordCountDisplay = (count) => {
  * @param {string} status 
  */
 const updateModelStatus = (status) => {
+
+    if (modelStatusDisplay.textContent === "👍 Classifier is up and running") return
 
     if (status === "loading") {
         modelStatusDisplay.innerHTML = `<span class="loading-spinner"> </span>Loading classifier (will load only once)`;
@@ -250,24 +287,42 @@ const updateLoadingDisplay = (isLoading) => {
     }
 }
 
+export const updateLabelsContainer = (outputs) => {
+    let htmlContent = "";
+
+    for (let output of outputs) {
+        const probability = convertToPercent(output.score);
+        const labelClass = `label-${output.label.toLowerCase()}`;
+        const labelPercentClass = `label-percent-${output.label.toLowerCase()}`;
+
+        htmlContent += `
+              <div class="label-container fade-in">
+                  <div class="label ${labelClass} border-none" style="--target-width: ${probability}%; animation: loadProgressBar 2s forwards;">
+                      <span class="label-percent ${labelPercentClass}">${probability}%</span>&nbsp;&nbsp;${output.label}
+                  </div>
+              </div>`;
+    }
+
+    labelsContainer.innerHTML = htmlContent;
+}
+
+
 const updateOutputContainer = () => {
 
-    const delay = 2000 // in miliseconds
+    const DELAY = 1000 // in miliseconds
 
-    debug('loadingDisplay: ', loadingDisplay)
+    // debug('loadingDisplay: ', loadingDisplay)
 
-    updateInputDisplay(globalState.prevInput)
 
     // Fake loading for 1 second
     setTimeout(() => {
-        updateLoadingDisplay(globalState.isLoading)
+        updateLoadingDisplay(false)
         updateLabelsContainer(globalState.output)
 
         if (isSmallScreenSize()) {
             labelsSection.scrollIntoView({ behavior: "smooth" });
         }
-    }, delay)
-
+    }, DELAY)
 
 }
 
@@ -290,32 +345,36 @@ clearButton.onclick = (e) => {
 /**
  * Takes the input from the global state and updates the UI accordingly
  */
-const handleSubmitInput = async (input) => {
+const handleSubmitInput = async () => {
+
+    const wordCount = globalState.wordCount;
+    if (!isValidCharacterCount(wordCount)) {
+        return
+    }
 
 
     // TEST: should get output from the classifier if successful
     // TEST: should display output to the UI
+    // 1. Disable button
+    // 2. update model status 
 
     try {
         setGlobalIsLoading(true)
         updateSubmitButtonState()
         updateModelStatus(modelStatus)
-        debug('model status: ', modelStatus)
+        updateLoadingDisplay(true)
+
         const output = await classify(globalState.input)
 
         outputContainer.scrollIntoView({ behavior: "smooth" });
 
         updateModelStatus("ready")
+
         setGlobalPrevInput(globalState.input);
-
-        debug("prev input:", globalState.prevInput)
-
         setGlobalOutput(output);
+        updateInputDisplay(globalState.prevInput)
 
-        debug('model status: ', modelStatus)
-        debug('done classifying')
-        debug('output after classifier: ', output)
-        updateLoadingDisplay(globalState.isLoading)
+
         updateSubmitButtonState()
         setGlobalIsLoading(false)
         updateOutputContainer()
@@ -328,29 +387,13 @@ const handleSubmitInput = async (input) => {
     debug(globalState.output)
 }
 
+
 submitButton.onclick = async (e) => {
     // TEST: should get value of inputField
     // TEST: should check if word count is enough
-    // TEST: should disable submitButton when loading
+    // TEST: should disable submitButton when loading  
 
-    debug(inputField.value)
-    debug(globalState.input)
-
-    const wordCount = globalState.wordCount;
-
-    debug('wordCount is ', wordCount, ' so ')
-
-
-    if (!isValidCharacterCount(wordCount)) {
-        debug('dont submit input')
-        return
-    }
-
-    debug('submit input');
-    debug('loading results...');
-    handleSubmitInput(inputField.value);
-
-
+    handleSubmitInput();
 
 }
 
@@ -366,22 +409,58 @@ exampleSelector.oninput = () => {
 /** TODO
  * @TODO set title attribute to analyzeBtn on hover when same prevInput and input
  * @TODO date and time to post
- * @TODO save results to local storage 
- * @TODO retrieve from local storage and display to UI 
+ * @TODO save results to local storage
+ * @TODO retrieve from local storage and display to UI
  * @TODO filter results
  * @TODO pagination
- * @TODO count and graph results 
- * @TODO export as csv 
+ * @TODO count and graph results
+ * @TODO export as csv
  * @TODO dark mode
  * @TODO guide below as an article
  * @TODO description for the labels with icons/emoji (take from github readme)
  */
 
 /** FEATURES
- * @FEAT input text 
- * @FEAT hate speech examples 
- * @FEAT word counter 
- * @FEAT clear input field 
- * @FEAT post like display 
- * @FEAT hate speech categories display 
+ * @FEAT input text
+ * @FEAT hate speech examples
+ * @FEAT word counter
+ * @FEAT clear input field
+ * @FEAT post like display
+ * @FEAT hate speech categories display
  */
+
+
+saveBtn.onclick = () => {
+    // clicking saveBtn should save current post to localstorage
+    // clikcing saveBtn should update the savedPosts container
+    // clikcing saveBtn should not save input when  
+
+    savedPostsSection.scrollIntoView({ behavior: "smooth" });
+
+    const savedPost = createSavedPost(globalState.prevInput, globalState.output)
+
+    try {
+
+        // Dont save if current and last save post are equivalent
+        // If currentSavedPost and lastSavedPost inputs are the same
+
+        // console.log('savedPost.input: ', savedPost.input)
+        // console.log('globalState.lastSavedPost', globalState.lastSavedPost.input)
+
+        if (savedPost.input === globalState.lastSavedPost.input) {
+            throw new Error('prev input and current input are the same')
+        }
+
+        saveToLocalStorage(savedPost)
+        setGlobalLastSavedPost(savedPost)
+
+
+    } catch (error) {
+        console.error("Error: ", error)
+
+    }
+
+}
+
+
+

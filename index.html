@@ -7,7 +7,7 @@
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <link href="./assets/mlthsc-fav.png" rel="icon" type="image/x-icon" />
     <link rel="stylesheet" href="style.css">
-    <title>Multilabel Tagalog Hate Speech Classifier</title>
+    <!-- <title>Multilabel Tagalog Hate Speech Classifier</title> -->
 </head>
 
 <body>
@@ -24,10 +24,10 @@
                 <h2 class="logo-name">mlthsc.</h2>
             </div>
             <!-- Dark Mode Toggle -->
-            <div class="dark-mode-toggle">
+            <!-- <div class="dark-mode-toggle">
                 <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()" />
                 <label for="dark-mode-toggle"></label>
-            </div>
+            </div> -->
         </nav>
     </header>
 
@@ -173,9 +173,9 @@
         <section id="label-section">
             <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
                 <h4 class="label-header">Hate Speech Categories</h4>
-                <!-- <button id="save-btn" class="btn btn-save">
+                <button id="save-btn" class="btn btn-save">
                     <i class="bx bxs-save bx-xs"></i> Save
-                </button> -->
+                </button>
             </div>
 
             <textarea type="text" value="" style="display: none" id="extractedText" disabled></textarea>
@@ -232,7 +232,7 @@
         </section>
 
         <!-- Saved Posts Section -->
-        <!-- <section id="saved-post">
+        <section id="saved-post-section" style="padding: 0;">
             <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
                 <h4>Saved Posts</h4>
                 <button id="export-btn" class="btn btn-save" title="Export to CSV">
@@ -243,25 +243,26 @@
                 <button class="all-filter filterButton active" data-label="">
                     All Labels
                 </button>
-                <i class="bx bx-filter bx-sm" style="margin-bottom: 10px; transform: rotate(-90deg); opacity: 30%"></i>
+                <i class="bx bx-filter bx-sm" style="transform: rotate(-90deg); opacity: 30%"></i>
                 <button class="filterButton" data-label="age">Age</button>
                 <button class="filterButton" data-label="gender">Gender</button>
                 <button class="filterButton" data-label="physical">Physical</button>
                 <button class="filterButton" data-label="race">Race</button>
                 <button class="filterButton" data-label="religion">Religion</button>
                 <button class="filterButton" data-label="others">Others</button>
-            </div> -->
+            </div>
 
-        <!-- No posts Container (Displayed when no labels are identified) -->
-        <!-- <div id="no-posts-container" style="display: none">
+            <!-- No posts Container (Displayed when no labels are identified) -->
+            <div id="no-posts-container" style="display: none">
                 <div class="analyze_container result-fade-in">
                     <p>No posts saved.</p>
                 </div>
-            </div> -->
-        <!-- 
-            <div id="savedPosts" class="posts-container"></div>
-            <div id="pagination-controls" class="pagination"></div> -->
+            </div>
+
+
+            <div id="pagination-controls" class="pagination"></div>
         </section>
+
 
         <!--  <!-- Stats --/>
         <article id="stats">
@@ -286,6 +287,10 @@
 
 
     </main>
+
+    <div id="saved-posts">
+        <!-- Template for savedPost -->
+    </div>
 
     <div class="faq-container bg-white">
         <section class="faq-sections">
@@ -463,10 +468,13 @@ increasingly tedious task for moderators, that's why.</p>
 
         <!-- JavaScript Files -->
         <!-- <script src="./frontend/stls2.js"></script> -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
 
         <!-- <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js"></script> -->
 
+        <!-- <script src="javascript/saving.js" type/="module"></script> -->
+        <!-- <script src="/saving.js" type="module"></script> -->
+        <!-- <script src="javascript/utils.js" type="module"></script> -->
         <script src="app.js" type="module"></script>
         <!-- <script src="./scripts/saveToLocalStorage.js"></script> -->
         <!-- <script src="./scripts/script.js"></script> -->

@@ -231,7 +231,7 @@ export class SavedPostsDatabase {
             <div class='no-posts-container fade-in'>
                 <div>
                     <h3 class='no-posts-title'>No classifications saved </h3>
-                    <p class='no-posts-subtext'>Save a classification result to add a post in your browser.</p>
+                    <p class='no-posts-subtext'>Save a classification result to display a post in your browser.</p>
                 </div>
             </div>
             `

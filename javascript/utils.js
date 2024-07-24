@@ -71,3 +71,28 @@ export const convertToPercent = (num) => {
     return (num * 100).toFixed(2)
 
 }
+
+export const convertToCSV = (savedPosts) => {
+    const headers = ["ID", "Input", "Age", "Gender", "Physical", "Race", "Religion", "Others"];
+    const csvRows = [];
+
+    // Add headers row
+    csvRows.push(headers.join(","));
+
+    // Add data rows
+    savedPosts.forEach(post => {
+        const row = [
+            post.id,
+            `"${post.input.replace(/"/g, '""')}"`, // Escape double quotes in input
+            post.output.find(label => label.label === "Age")?.score || 0,
+            post.output.find(label => label.label === "Gender")?.score || 0,
+            post.output.find(label => label.label === "Physical")?.score || 0,
+            post.output.find(label => label.label === "Race")?.score || 0,
+            post.output.find(label => label.label === "Religion")?.score || 0,
+            post.output.find(label => label.label === "Others")?.score || 0
+        ];
+        csvRows.push(row.join(","));
+    });
+
+    return csvRows.join("\n");
+}

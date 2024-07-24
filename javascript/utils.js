@@ -49,26 +49,7 @@ export function isSmallScreenSize() {
 
 debug("output.js")
 
-const labelsContainer = document.getElementById("labels-container");
 
-export const updateLabelsContainer = (outputs) => {
-    let htmlContent = "";
-
-    for (let output of outputs) {
-        const probability = (output.score * 100).toFixed(2);
-        const labelClass = `label-${output.label.toLowerCase()}`;
-        const labelPercentClass = `label-percent-${output.label.toLowerCase()}`;
-
-        htmlContent += `
-              <div class="label-container fade-in">
-                  <div class="label ${labelClass} border-none" style="--target-width: ${probability}%; animation: loadProgressBar 2s forwards;">
-                      <span class="label-percent ${labelPercentClass}">${probability}%</span>&nbsp;&nbsp;${output.label}
-                  </div>
-              </div>`;
-    }
-
-    labelsContainer.innerHTML = htmlContent;
-}
 
 export const typeWriter = (element, text, speed = 10) => {
     element.textContent = "";
@@ -84,3 +65,34 @@ export const typeWriter = (element, text, speed = 10) => {
 
     typeNextChar();
 };
+
+
+export const convertToPercent = (num) => {
+    return (num * 100).toFixed(2)
+
+}
+
+export const convertToCSV = (savedPosts) => {
+    const headers = ["ID", "Input", "Age", "Gender", "Physical", "Race", "Religion", "Others"];
+    const csvRows = [];
+
+    // Add headers row
+    csvRows.push(headers.join(","));
+
+    // Add data rows
+    savedPosts.forEach(post => {
+        const row = [
+            post.id,
+            `"${post.input.replace(/"/g, '""')}"`, // Escape double quotes in input
+            post.output.find(label => label.label === "Age")?.score || 0,
+            post.output.find(label => label.label === "Gender")?.score || 0,
+            post.output.find(label => label.label === "Physical")?.score || 0,
+            post.output.find(label => label.label === "Race")?.score || 0,
+            post.output.find(label => label.label === "Religion")?.score || 0,
+            post.output.find(label => label.label === "Others")?.score || 0
+        ];
+        csvRows.push(row.join(","));
+    });
+
+    return csvRows.join("\n");
+}

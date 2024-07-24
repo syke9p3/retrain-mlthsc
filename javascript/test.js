@@ -1,5 +1,5 @@
 // FORMAT: tests should follow the format "<ENTITY> should <LOGIC>"
-// TEST: submitButton should disable when inputField value word count is not between 3 and 280 inclusive (disable button when invalid input)
+// TEST: submitButton should disable when inputField value word count is not between 15 and 280 inclusive (disable button when invalid input)
 // SUBTEST: submitButton should disable when inputField value word count is 300
 // SUBTEST: submitButton should disable when inputField value word count is 0
 // TEST: submitButton should disable when inputField current value and previously submitted input is similar

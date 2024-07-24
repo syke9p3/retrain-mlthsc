@@ -59,6 +59,7 @@ function debugGlobalState() {
     // console.groupEnd();
 }
 
+
 const setGlobalInput = (text) => {
     globalState.input = text;
 }
@@ -478,7 +479,10 @@ const addDeleteEventListeners = () => {
     deleteButtons.forEach(button => {
         button.onclick = (e) => {
             const postId = button.getAttribute('data-id');
+            const postText = button.getAttribute('data-text');
             console.log(`deleting ${postId}`);
+
+            if (!confirm(`Are you sure you want to delete Post ID:${postId}? \n\nText:\n\n${postText}`)) return;
 
             try {
                 DATABASE.deletePost(postId);

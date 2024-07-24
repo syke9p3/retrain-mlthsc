@@ -31,15 +31,14 @@
         </nav>
     </header>
 
-    <!-- Main Content Section -->
-    <main class="container " id="main-container">
+    <main class="" id="main-container">
         <!-- Introduction and Instructions -->
-        <section>
-            <div class="fixed">
-                <h1 class="banner-title">
+        <section class="banner-section">
+            <div class="banner container">
+                <h1 class="banner-title" style=" color: var(--text-inverse);">
                     Multilabel Tagalog Hate Speech Classifier
                 </h1>
-                <p class="text-secondary" id="input-post-description" style="display: block">
+                <p class="text-secondary" id="input-post-description" style="display: block;  color: #EFF1F5;">
                     Enter Tagalog
                     <span class="tooltip">
                         hate speech
@@ -52,194 +51,192 @@
                     </span>
                     text in the textbox below. Press the <b>Analyze</b> button to
                     classify the hate speech according to <span class="tooltip">
-                        <a href="#faq-categories">different categories</a>
+                        different categories
                         <span class="tooltiptext">
-                            Age, Gender, Physical, Race, Religion, Others. Click here to learn more.
+                            Age, Gender, Physical, Race, Religion, Others.
                         </span>
                     </span>. The classifier
                     accepts a text input from <b>15 characters</b> up to <b>280 characters</b>.
                 </p>
             </div>
         </section>
-        <!-- <section>
-            <div>
-                <p>icon</p>
-                <p><b>Age</b></p>
-                <p><b>Age</b></p>
-            </div>
-        </section> -->
 
-
+        <!-- Main Content Section -->
 
         <!-- Input Options (Text, Link, Upload File, Upload Image) -->
-        <section class="input-set">
+        <div class="input-set-wrapper">
+            <section class="input-set">
 
-            <!-- Input Post Tab -->
-            <article class="input-textbox" id="input-section">
-                <textarea type="text" id="input-text" placeholder="Enter hate speech" value=""></textarea>
-
-                <div class="flex">
-                    <!-- Sample Hate Speech Dropdown -->
-                    <div id="sample-hate-speech-container">
-                        <select id="sample-hate-speech">
-                            <option selected disabled>Select a Sample Hate Speech</option>
-                            <option
-                                value="bading tangina ka masahol ka pa sa hayop na feeling banal catholic fuckers kahoy lang yang sinasamba nyo">
-                                Example 1
-                            </option>
-                            <option value="tangina kang panget na intsik ka ang baho mo pang gago ka pakyu">
-                                Example 2
-                            </option>
-                            <option
-                                value="Tangina. Kailan mo kaya ipapasok sa utak mo ang mga binibilin ko. Ang tanga tanga mong bobo ka. Walang common sense ang tanga. Mamatay ka na nga.">
-                                Example 3
-                            </option>
-                            <option
-                                value="Tanginang mga millenials to puro laro inaatupag. Lalo na mga babaeng puro pagpapakapokpok inaasikaso. Ganto na ba future generation ng pinas? Mga walang silbi sa lipunan">
-                                Example 4
-                            </option>
-                            <option
-                                value="Putanginang mga arabo na to. Parang mga tanga magsalita amputa. Balik na kayo sa bansa nyo tangina nyo mga mukhang unggoy na panget.">
-                                Example 5
-                            </option>
-                        </select>
-                    </div>
-
-                    <!-- Word Count Display -->
-                    <div class="dev dev-container">
-                        <span id="word-count" class="dev" style="text-align: center; margin-right: 5px">
-                            -
-                        </span>
-                        <span class="word-limit"> / 280 characters</span>
-                    </div>
-                </div>
-            </article>
-
-            <div class="toolbar">
-
-                <!-- Analyze and Clear Buttons -->
-                <div class="btn-group">
-                    <!-- Button for Input Post and Upload File -->
-                    <button id="analyze-btn" disabled class="btn btn-options btn-analyze">
-                        <i class="bx bx-send"></i> Classify
-                    </button>
-
-                    <button id="clear-btn" class="btn btn-options btn-clear">
-                        <i class="bx bxs-tag-x"></i> Clear
-                    </button>
-                </div>
-                <div class="toaster">
-                    <span id="model-status">Press <b>Classify</b> to activate the hate speech classifier.</span>
-                </div>
-
-            </div>
-
-        </section>
-
-        <section id="output-container">
-            <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
-                <h4 class="label-header">Input Text</h4>
-            </div>
-            <div class="input-display-container" id="input-display-container">
-                <div>
-                    <div class="input-display" id="input-display" style="transition: opacity 0.5s;">
-                        <div class="tweet-header">
-                            <div>
-                                <img src="assets/mlthsc.png" width="40px" alt="">
-                            </div>
-                            <div class="tweet-name">
-                                <h4 class="">MLTHSC</h4>
-                                <p>@bert_tagalog</p>
-                            </div>
+                <!-- Input Post Tab -->
+                <div class="input-textbox " id="input-section">
+                    <textarea type="text" id="input-text" placeholder="Enter hate speech" value=""></textarea>
+                    <div class="flex">
+                        <!-- Sample Hate Speech Dropdown -->
+                        <div id="sample-hate-speech-container">
+                            <select id="sample-hate-speech">
+                                <option selected disabled>Select a Sample Hate Speech</option>
+                                <option
+                                    value="bading tangina ka masahol ka pa sa hayop na feeling banal catholic fuckers kahoy lang yang sinasamba nyo">
+                                    Example 1
+                                </option>
+                                <option value="tangina kang panget na intsik ka ang baho mo pang gago ka pakyu">
+                                    Example 2
+                                </option>
+                                <option
+                                    value="Tangina. Kailan mo kaya ipapasok sa utak mo ang mga binibilin ko. Ang tanga tanga mong bobo ka. Walang common sense ang tanga. Mamatay ka na nga.">
+                                    Example 3
+                                </option>
+                                <option
+                                    value="Tanginang mga millenials to puro laro inaatupag. Lalo na mga babaeng puro pagpapakapokpok inaasikaso. Ganto na ba future generation ng pinas? Mga walang silbi sa lipunan">
+                                    Example 4
+                                </option>
+                                <option
+                                    value="Putanginang mga arabo na to. Parang mga tanga magsalita amputa. Balik na kayo sa bansa nyo tangina nyo mga mukhang unggoy na panget.">
+                                    Example 5
+                                </option>
+                            </select>
                         </div>
-                        <span id="input-display-text">
-                            Let's analyze Tagalog hate speech tweet according to Age, Gender, Physical, Race, Religion
-                            and Others.
-                        </span>
-                        <span id="input-display-date" class="input-display-date">
-                            <div id="tweet-time">3:41:55 AM</div>
-                            <div class="tweet-date-separator">•</div>
-                            <div id="tweet-date">22 Jan 2023</div>
-                        </span>
+                        <!-- Word Count Display -->
+                        <div class="dev dev-container">
+                            <span id="word-count" class="dev" style="text-align: center; margin-right: 5px">
+                                -
+                            </span>
+                            <span class="word-limit"> / 280 characters</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="loading-display" style="display: none;">Classifying text...</div>
-            <div id="output-display"></div>
+                <div class="toolbar">
+
+                    <!-- Analyze and Clear Buttons -->
+                    <div class="btn-group">
+                        <!-- Button for Input Post and Upload File -->
+                        <button id="analyze-btn" disabled class="btn btn-options btn-analyze">
+                            <i class="bx bx-send"></i> Classify
+                        </button>
+
+                        <button id="clear-btn" class="btn btn-options btn-clear">
+                            <i class="bx bxs-tag-x"></i> Clear
+                        </button>
+                    </div>
+                    <div class="toaster">
+                        <span id="model-status">Press <b>Classify</b> to activate the hate speech classifier.</span>
+                    </div>
+
+                </div>
+        </div>
+
         </section>
-
-        <!-- Labels and Results Display Section -->
-        <section id="label-section">
-            <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
-                <h4 class="label-header">Hate Speech Categories</h4>
-                <button id="save-btn" class="btn btn-save">
-                    <i class="bx bxs-save bx-xs"></i> Save
-                </button>
-            </div>
-
-            <textarea type="text" value="" style="display: none" id="extractedText" disabled></textarea>
-
-
-            <!-- No Labels Container (Displayed when no labels are identified) -->
-            <div id="no-labels-container" style="display: none">
-                <div class="analyze_container result-fade-in">
-                    <p>No label identified, try changing the text.</p>
-                </div>
-            </div>
-
-
-            <!-- Container for Displaying Labels -->
-            <div class="labels-container" id="labels-container">
-                <div class="label-container">
-                    <div class="label border-none">
-                        <span class="label-percent">0.00%</span>&nbsp;&nbsp;Age
+        <div class="section output-section" id="output-section">
+            <section id="output-container" class="">
+                <!-- <div class="flex justify-between align-center section-header">
+                    <h4 class="label-header">Input Text</h4>
+                </div> -->
+                <div class="input-display-container" id="input-display-container">
+                    <div>
+                        <div class="input-display" id="input-display" style="transition: opacity 0.5s;">
+                            <div class="tweet-header">
+                                <div>
+                                    <img src="assets/mlthsc.png" width="40px" alt="">
+                                </div>
+                                <div class="tweet-name">
+                                    <h4 class="">MLTHSC</h4>
+                                    <p>@bert_tagalog</p>
+                                </div>
+                            </div>
+                            <span id="input-display-text">
+                                Let's analyze Tagalog hate speech tweet according to Age, Gender, Physical, Race,
+                                Religion
+                                and Others.
+                            </span>
+                            <span id="input-display-date" class="input-display-date">
+                                <div id="tweet-time">3:41:55 AM</div>
+                                <div class="tweet-date-separator">•</div>
+                                <div id="tweet-date">22 Jan 2023</div>
+                            </span>
+                        </div>
                     </div>
                 </div>
-                <div class="label-container">
-                    <div class="label border-none">
-                        <span class="label-percent">0.00%</span>&nbsp;&nbsp;Gender
-                    </div>
-                </div>
-                <div class="label-container">
-                    <div class="label border-none">
-                        <span class="label-percent">0.00%</span>&nbsp;&nbsp;Physical
-                    </div>
-                </div>
-                <div class="label-container">
-                    <div class="label border-none">
-                        <span class="label-percent">0.00%</span>&nbsp;&nbsp;Race
-                    </div>
-                </div>
-                <div class="label-container">
-                    <div class="label border-none">
-                        <span class="label-percent">0.00%</span>&nbsp;&nbsp;Religion
-                    </div>
-                </div>
-                <div class="label-container">
-                    <div class="label border-none">
-                        <span class="label-percent">0.00%</span>&nbsp;&nbsp;Others
-                    </div>
-                </div>
-            </div>
 
-            <!-- Settings Container for Label Display Options -->
-            <div class="settings-container" id="hide-labels-container" style="display: none">
-                <button class="btn" id="toggle-labels-btn">
-                    Show Labels below 50% <i class="bx bx-chevron-down"></i>
-                </button>
-            </div>
-        </section>
+                <div id="loading-display" style="display: none;">Classifying text...</div>
+                <div id="output-display"></div>
+            </section>
+
+            <!-- Labels and Results Display Section -->
+            <section id="label-section" class="" style="flex: 1;">
+                <div class="flex justify-between align-center section-header" style="padding-bottom: 10px; ">
+                    <h4 class="label-header">Hate Speech Categories</h4>
+                    <button id="save-btn" class="btn btn-save">
+                        <i class="bx bxs-save bx-xs"></i> Save
+                    </button>
+                </div>
+
+                <textarea type="text" value="" style="display: none" id="extractedText" disabled></textarea>
+
+
+                <!-- No Labels Container (Displayed when no labels are identified) -->
+                <div id="no-labels-container" style="display: none">
+                    <div class="analyze_container result-fade-in">
+                        <p>No label identified, try changing the text.</p>
+                    </div>
+                </div>
+
+
+                <!-- Container for Displaying Labels -->
+                <div class="labels-container" id="labels-container">
+                    <div class="label-container">
+                        <div class="label border-none">
+                            <span class="label-percent">0.00%</span>&nbsp;&nbsp;Age
+                        </div>
+                    </div>
+                    <div class="label-container">
+                        <div class="label border-none">
+                            <span class="label-percent">0.00%</span>&nbsp;&nbsp;Gender
+                        </div>
+                    </div>
+                    <div class="label-container">
+                        <div class="label border-none">
+                            <span class="label-percent">0.00%</span>&nbsp;&nbsp;Physical
+                        </div>
+                    </div>
+                    <div class="label-container">
+                        <div class="label border-none">
+                            <span class="label-percent">0.00%</span>&nbsp;&nbsp;Race
+                        </div>
+                    </div>
+                    <div class="label-container">
+                        <div class="label border-none">
+                            <span class="label-percent">0.00%</span>&nbsp;&nbsp;Religion
+                        </div>
+                    </div>
+                    <div class="label-container">
+                        <div class="label border-none">
+                            <span class="label-percent">0.00%</span>&nbsp;&nbsp;Others
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Container for Label Display Options -->
+                <div class="settings-container" id="hide-labels-container" style="display: none">
+                    <button class="btn" id="toggle-labels-btn">
+                        Show Labels below 50% <i class="bx bx-chevron-down"></i>
+                    </button>
+                </div>
+            </section>
+        </div>
 
         <!-- Saved Posts Section -->
-        <section id="saved-post-section" style="padding: 0;">
+        <section id="saved-post-section" class="section" style="">
             <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
-                <h4>Saved Posts</h4>
+                <div class="counter-container">
+                    <div id="saved-posts-counter" class="saved-posts-counter">0</div>
+                    <h4>Saved Posts</h4>
+                </div>
                 <button id="export-btn" class="btn btn-save" title="Export to CSV">
                     <i class="bx bx-export bx-xs"></i> Export
                 </button>
             </div>
-            <div id="labelFilterButtons">
+            <!-- <div id="labelFilterButtons">
                 <button class="all-filter filterButton active" data-label="">
                     All Labels
                 </button>
@@ -250,15 +247,7 @@
                 <button class="filterButton" data-label="race">Race</button>
                 <button class="filterButton" data-label="religion">Religion</button>
                 <button class="filterButton" data-label="others">Others</button>
-            </div>
-
-            <!-- No posts Container (Displayed when no labels are identified) -->
-            <div id="no-posts-container" style="display: none">
-                <div class="analyze_container result-fade-in">
-                    <p>No posts saved.</p>
-                </div>
-            </div>
-
+            </div> -->
 
             <div id="pagination-controls" class="pagination"></div>
         </section>
@@ -288,9 +277,9 @@
 
     </main>
 
-    <div id="saved-posts">
+    <section class="section" id="saved-posts">
         <!-- Template for savedPost -->
-    </div>
+    </section>
 
     <div class="faq-container bg-white">
         <section class="faq-sections">
@@ -409,7 +398,8 @@ increasingly tedious task for moderators, that's why.</p>
                             </span>
                         </span> (hosted on <a
                             href="https://huggingface.co/syke9p3/bert-multilabel-tagalog-hate-speech-classifier"
-                            target="_blank" style="color: #424BFC;">Hugging Face <i
+                            target="_blank" style="color: #424BFC;"
+                            title="syke9p3/bert-multilabel-tagalog-hate-speech-classifier">Hugging Face <i
                                 class='bx bx-link-external'></i></a>)
                         will process the text and
                         output the probability scores for
@@ -429,42 +419,49 @@ increasingly tedious task for moderators, that's why.</p>
         <div class="flex justify-between align-center section-header" style="padding: 10px; border: none"></div>
 
         <!-- Footer -->
-        <footer>
-            <article class="flex model-description">
-                <div>
-                    <h4>
-                        MLTHSC: MULTILABEL TAGALOG HATE SPEECH CLASSIFIER
-                    </h4>
-                    <p class="footer_size">
-                        MLTHSC employs Bidirectional Encoder Representations from
-                        Transformer (BERT) to analyze text and categorize hate speech in
-                        Tagalog across multiple labels. The classifier discerns hateful
-                        content related to age, gender, race, religion, physical attributes,
-                        and other categories, enhancing the identification, and
-                        understanding of diverse forms of harmful speech.
+        <section class="footer">
+            <div class="wrapper-1024 footer-content">
+                <div class="footer-description">
+
+                    <div class="footer-description-1">
+                        <div>
+                            <img src="assets/mlthsc.png" width="40px" alt="">
+                        </div>
+                        <div>
+                            <h4 class="footer-description-title">
+                                MLTHSC: Multilabel Tagalog Hate Speech Classifier
+                            </h4>
+                            <p class="footer-description-text">
+                                Multilabel Tagalog Hate Speech Classifier (MLTHSC) is a free to use AI-powered tool
+                                designed to classify hate speech in Tagalog text according to Age, Gender, Physical,
+                                Race, Religion, and Other categories. It uses a fine-tuned Tagalog BERT model to analyze
+                                text and a neural
+                                network to identify various categories of hate speech.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="footer-description-2">
+                        <h4 class="footer-description-title">Disclaimer</h4>
+                        <p class="footer-description-text">
+                            This website does not collect any user credentials. When an output is saved, it is stored
+                            only
+                            in the localstorage of your
+                            browser's device, so your information remains secure and within your
+                            control.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-credits">
+                <div class="wrapper-1024 footer-authors ">
+                    <p class="">&copy; 2024: Thesis Passers</p>
+                    <p class="authors">
+                        <span>Saya-ang</span> | <span>Gozum</span> | <span>Hamor</span> |
+                        <span>Mabansag</span>
                     </p>
                 </div>
-
-                <div>
-                    <h4>DISCLAIMER</h4>
-                    <p class="footer_size">
-                        This website does not collect any user credentials. When an output is saved, it is stored only
-                        in the localstorage of your
-                        browser's device, so your information remains secure and within your
-                        control.
-                    </p>
-                </div>
-            </article>
-
-            <article class="flex">
-                <p class="footer_size ">THESIS PASSERS &copy; 2024 <br /></p>
-
-                <p class="footer_size footer-authors">
-                    <span>Saya-ang</span> | <span>Gozum</span> | <span>Hamor</span> |
-                    <span>Mabansag</span>
-                </p>
-            </article>
-        </footer>
+            </div>
+        </section>
 
         <!-- JavaScript Files -->
         <!-- <script src="./frontend/stls2.js"></script> -->

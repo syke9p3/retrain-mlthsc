@@ -38,7 +38,7 @@ class SavedPost {
      * @param {savedPost} savedPost 
      * @returns 
      */
-    static generateComponent = (savedPost) => {
+    static generateSavedPostComponent = (savedPost, isFirst) => {
 
         const id = savedPost.id;
 
@@ -63,10 +63,10 @@ class SavedPost {
         });
 
         const component = `
-            <div class="saved-post-component" data-id="${id}">
+            <div class="saved-post-component ${isFirst && 'fade-in'}" data-id="${id}">
                 <div class="saved-post-toolbar">
                     <b class="saved-post-id">ID: ${id}</b>
-                    <span class="toolbar-btn">
+                    <span class="toolbar-btn" > // onclick='delete this post'
                         <i class='bx bx-dots-horizontal-rounded'></i>
                     </span>
                 </div>
@@ -88,13 +88,11 @@ class SavedPost {
                     </div>
                     </div>
                     `
-        // <div class='saved-post-labels'>
-        //     ${labelsContainer}
-        // </div>
-
 
         return component;
     }
+
+
 
 }
 
@@ -104,15 +102,23 @@ export class SavedPostsDatabase {
 
     static #instance;
 
-    constructor(localstorage_key) {
+    constructor(localstorage_key, elements) {
 
         if (SavedPostsDatabase.#instance) {
             throw new Error("SavedPostsDatabase instance already exists")
         }
 
         this.localstorage_key = localstorage_key;
+        this.elements = {
+            containerElement: elements.containerElement,
+            counterElement: elements.counterElement
+        }
         this.savedPosts = [];
         SavedPostsDatabase.#instance = this;
+    }
+
+    initializeSavedPosts() {
+        this.savedPosts = this.#retrieveSavedPostsFromLocalStorage(this.localstorage_key)
     }
 
     getSavedPosts() {
@@ -128,12 +134,84 @@ export class SavedPostsDatabase {
         return this.savedPosts[idx];
     }
 
-    initializeSavedPosts() {
-        this.savedPosts = this.#retrieveSavedPostsFromLocalStorage(this.localstorage_key)
+    updateLocalStorage() {
+        localStorage.setItem(this.localstorage_key, JSON.stringify(this.savedPosts));
     }
 
-    savePostsToLocalStorage() {
-        localStorage.setItem(this.localstorage_key, JSON.stringify(this.savedPosts));
+    getCount() {
+        return this.savedPosts.length
+    }
+
+    getLabelsCount() {
+        const labels_counter = {
+            'Age': 0,
+            'Gender': 0,
+            'Physical': 0,
+            'Race': 0,
+            'Religion': 0,
+            'Others': 0,
+        }
+
+        // count
+
+        return labels_counter;
+    }
+
+    renderCount() {
+        this.elements.counterElement.textContent = this.getCount();
+        // TODO render count for all labels here
+    }
+
+    static createSavedPost = (input, output) => {
+
+        if (!input) {
+            throw new Error('input is undefined')
+        }
+
+        const id = createID()
+
+        const savedPost = {
+            id: id,
+            input: input,
+            output: output,
+        }
+
+        return savedPost;
+    }
+
+    addPost(savedPost) {
+
+        console.log("adding post test");
+
+        if (!savedPost) {
+            throw new Error('saved post is null')
+        }
+
+        // Add the latest saved post to the beginning of array
+        this.savedPosts.unshift(savedPost);
+
+        // Save the updated array back to localStorage
+        this.updateLocalStorage()
+
+        console.log("after adding post: New Localstorage:", this.savedPosts);
+    }
+
+    deletePost(id) {
+
+        const postIndex = this.savedPosts.findIndex(post => post.id === id);
+
+        if (postIndex === -1) {
+            throw new Error(`Post with id ${id} not found`);
+        }
+
+        // Remove the post from the array
+        this.savedPosts.splice(postIndex, 1);
+
+        // Save the updated array back to localStorage
+        this.updateLocalStorage();
+
+        console.log(`Post with id ${id} has been deleted. New Localstorage:`, this.savedPosts);
+
     }
 
     #retrieveSavedPostsFromLocalStorage = (localstorage_key) => {
@@ -152,15 +230,56 @@ export class SavedPostsDatabase {
         return savedPosts;
     }
 
-    generateSavedPostsComponent() {
+    renderPosts(id) {
+
+        if (id) {
+            console.log('render post id:', id)
+        }
 
         let HTMLcontents = ``
 
-        this.savedPosts.forEach((savedPost) => {
-            HTMLcontents += SavedPost.generateComponent(savedPost)
+        this.savedPosts.forEach((savedPost, index) => {
+            const isFirst = index === 0;
+            HTMLcontents += SavedPost.generateSavedPostComponent(savedPost, isFirst)
         })
 
-        return HTMLcontents;
+        console.log(HTMLcontents);
+        console.log(this.elements.containerElement);
+
+        this.elements.containerElement.innerHTML = HTMLcontents;
+    }
+
+    downloadReport(filename, filetype) {
+
+        let fileContent, mimeType;
+
+        if (filetype === 'json') {
+            fileContent = JSON.stringify(this.savedPosts, null, 2);
+            mimeType = 'application/json';
+        } else if (filetype === 'csv') {
+            // TODO: fileContent = convertToCSV(data);
+            fileContent = data;
+            mimeType = 'text/csv';
+        } else {
+            throw new Error('Invalid format. Should be json or csv.')
+        }
+
+
+        if (!filename) {
+            filename = 'report_' + createID()
+        }
+
+        const blob = new Blob([fileContent], {
+            type: mimeType,
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.href = url;
+        a.download = `${filename}.${filetype}`;
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 
 }
@@ -238,7 +357,7 @@ const createID = () => {
 //  * @param {string} input 
 //  param {SavedPost} output 
 //  */
-export const createSavedPost = (input, output) => {
+const createSavedPost = (input, output) => {
 
     if (!input) {
         throw new Error('input is undefined')
@@ -259,7 +378,7 @@ export const createSavedPost = (input, output) => {
 /**
  * Initializes storage as an array by setting the value '[]'
  */
-export const initializeLocalStorage = (SAVED_POSTS_LS_KEY) => {
+const initializeLocalStorage = (SAVED_POSTS_LS_KEY) => {
     localStorage.setItem(SAVED_POSTS_LS_KEY, `[]`);
 }
 
@@ -269,12 +388,12 @@ export const initializeLocalStorage = (SAVED_POSTS_LS_KEY) => {
  */
 
 
-export const clearLocalStorage = () => {
+const clearLocalStorage = () => {
     localStorage.setItem(SAVED_POSTS_LS_KEY, '');
 }
 
 
-export const saveToLocalStorage = (savedPost) => {
+const saveToLocalStorage = (savedPost) => {
 
     if (!savedPost) {
         throw new Error('saved post is null')

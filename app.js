@@ -1,4 +1,4 @@
-import { createSavedPost, generateSavedPostsComponent, SavedPostsDatabase, saveToLocalStorage } from "./javascript/saving.js";
+import { SavedPostsDatabase } from "./javascript/saving.js";
 import { convertToPercent, countCharacters, generateDate, getDate, getTime, isSmallScreenSize, isValidCharacterCount, typeWriter } from "./javascript/utils.js"
 import { classify, modelStatus } from "./javascript/classifier.js"
 import { SAVED_POSTS_LS_KEY } from "./javascript/constants.js";
@@ -33,6 +33,16 @@ const saveBtn = document.getElementById("save-btn");
 const exportButton = document.getElementById("export-btn");
 const savedPostsSection = document.getElementById("saved-post-section");
 const savedPostsContainer = document.getElementById("saved-posts");
+const savedPostsCounter = document.getElementById("saved-posts-counter");
+
+// Initialize Database
+const DATABASE = new SavedPostsDatabase(SAVED_POSTS_LS_KEY,
+    {
+        containerElement: savedPostsContainer,
+        counterElement: savedPostsCounter,
+    }
+)
+
 
 export function debug(...args) {
     // console.log(...args);
@@ -101,27 +111,25 @@ document.addEventListener("DOMContentLoaded", function () {
         updateSubmitButtonState()
     }
 
-    // Initialize Database
-    const db = new SavedPostsDatabase(SAVED_POSTS_LS_KEY)
+
 
     // Get content of localstorage
-    db.initializeSavedPosts()
+    DATABASE.initializeSavedPosts()
 
-    try {
-        const firstPost = db.getSavedPostByIndex(1)
-        savedPostsContainer.innerHTML += generateSavedPostsComponent(firstPost);
-    } catch (e) {
-        console.log('e: ', e)
-    }
+    // try {
+    //     const firstPost = DATABASE.getSavedPostByIndex(1)
+    //     savedPostsContainer.innerHTML += generateSavedPostsComponent(firstPost);
+    // } catch (e) {
+    //     console.log('e: ', e)
+    // }
 
     // render savedPosts container
     // renderSavedPostsComponent();
-    savedPostsContainer.innerHTML = db.generateSavedPostsComponent()
+
+    updateSavedPostContainer();
 
 });
 
-const renderSavedPostsComponent = () => {
-}
 
 
 /**
@@ -388,6 +396,8 @@ const handleSubmitInput = async () => {
 }
 
 
+
+
 submitButton.onclick = async (e) => {
     // TEST: should get value of inputField
     // TEST: should check if word count is enough
@@ -429,38 +439,58 @@ exampleSelector.oninput = () => {
  * @FEAT hate speech categories display
  */
 
+const updateSavedPostContainer = () => {
+    DATABASE.renderPosts()
+    DATABASE.renderCount()
+}
 
-saveBtn.onclick = () => {
+
+
+const handleSavePost = () => {
+
     // clicking saveBtn should save current post to localstorage
     // clikcing saveBtn should update the savedPosts container
     // clikcing saveBtn should not save input when  
 
-    savedPostsSection.scrollIntoView({ behavior: "smooth" });
-
-    const savedPost = createSavedPost(globalState.prevInput, globalState.output)
+    const savedPost = SavedPostsDatabase.createSavedPost(globalState.prevInput, globalState.output)
 
     try {
-
-        // Dont save if current and last save post are equivalent
-        // If currentSavedPost and lastSavedPost inputs are the same
-
-        // console.log('savedPost.input: ', savedPost.input)
-        // console.log('globalState.lastSavedPost', globalState.lastSavedPost.input)
 
         if (savedPost.input === globalState.lastSavedPost.input) {
             throw new Error('prev input and current input are the same')
         }
 
-        saveToLocalStorage(savedPost)
+        DATABASE.addPost(savedPost)
+        updateSavedPostContainer();
         setGlobalLastSavedPost(savedPost)
+
+        if (isSmallScreenSize())
+            savedPostsSection.scrollIntoView({ behavior: "smooth" });
 
 
     } catch (error) {
         console.error("Error: ", error)
 
     }
+}
 
+const handleDeletePost = (id) => {
+    updateSavedPostContainer()
 }
 
 
+saveBtn.onclick = () => {
+    handleSavePost()
+}
+
+
+exportButton.onclick = () => {
+    console.log('export')
+    console.log(DATABASE)
+
+    // DATABASE
+
+    DATABASE.downloadReport('', 'json')
+
+}
 

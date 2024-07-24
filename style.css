@@ -4,6 +4,7 @@
     /* base colors */
     --white: #ffffff;
     --black: #202020;
+    --mantle: #1E1E2E;
     --gray-25: #80808040;
     /* --accent: #1ad6ba; */
     --accent: #2c698f;
@@ -95,26 +96,12 @@ a {
     text-decoration: none;
 }
 
-main {
-    border-radius: 8px;
-    width: 1024px;
-
-}
-
-section {
-    padding: 30px 0;
-}
-
-main section {
-    max-width: 768px;
-    margin: 0 auto;
-}
 
 /* Container Sizes for devices */
 .container {
     margin: 0 auto;
     padding: 25px;
-    max-width: 70%;
+    max-width: 80%;
 
     @media screen and (max-width: 768px) {
         max-width: 100%;
@@ -138,23 +125,24 @@ main section {
 
 /* Nav Bar */
 header {
-    border-bottom: 1px solid var(--gray-25);
+    /* border-bottom: 1px solid var(--gray-25); */
 }
 
 nav {
     padding: 1rem 5%;
-    box-shadow: 0 5px 16px #999da025;
+    /* box-shadow: 0 5px 16px #999da025; */
     justify-content: space-between;
     align-items: center;
     position: relative;
     z-index: 10;
+    background-color: var(--mantle);
+    color: var(--white);
 }
 
 .logo {
     font-weight: 700;
     display: flex;
     align-items: center;
-    color: var(--black);
 }
 
 .logo-img {
@@ -176,35 +164,64 @@ u {
     color: firebrick;
 }
 
-
-
-/* Tabs for input */
-.tabs {
-    gap: 4px;
-    margin-bottom: 0.8rem;
+main {
+    position: relative;
 }
 
-.tab {
-    border-radius: 0;
-    background-color: white;
+main .section {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 32px 12px;
 }
 
-.tab.active {
-    border-bottom: 3px solid var(--black);
+/* Labels */
+.section-header {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--gray-25);
+    margin-bottom: 24px;
 }
 
-.btn.tab.active {
-    background-color: #fff;
-    color: black;
+.banner-section {
+    background-color: var(--mantle);
+    padding: 0 24px;
+    padding-bottom: 100px;
 }
 
-.btn.tab.inactive:hover,
-.btn.tab-inst.inactive:hover {
-    opacity: 70%;
-    cursor: pointer;
+
+.banner {
+    max-width: 1024px;
 }
 
-/* Input Post Tab */
+
+.input-set-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.input-set {
+    /* position: absolute; */
+    width: 100%;
+    max-width: 768px;
+
+
+    padding: 0 8px 16px 8px;
+    /* transform: translateY(50%); */
+    /* background-color: var(--mantle) */
+    /* background-color: blueviolet; */
+
+    /* left: 50%; */
+
+    /* transform: translate(-50%, -50%); */
+    /* padding: 24px;  */
+    margin-top: -100px;
+
+}
+
+
 .input-textbox {
     /* background-color: var(--white); */
     background-color: #ebeff5;
@@ -216,10 +233,6 @@ u {
 
 }
 
-/* For Tab Container */
-.input-set {
-    padding: 0 8px 16px 8px;
-}
 
 
 
@@ -396,12 +409,7 @@ textarea {
 }
 
 
-/* Labels */
-.section-header {
-    padding: 0 20px;
-    border-bottom: 1px solid var(--gray-25);
-    margin: 0 10px 20px 10px;
-}
+
 
 .labels-container {
     display: flex;
@@ -1248,6 +1256,8 @@ footer {
     }
 
 }
+
+.saved-post-counter {}
 
 .saved-post-component {
     background-color: var(--white);

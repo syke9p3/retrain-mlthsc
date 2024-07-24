@@ -458,9 +458,9 @@ const handleSavePost = () => {
 
     try {
 
-        if (savedPost.input === globalState.lastSavedPost.input) {
-            throw new Error('prev input and current input are the same')
-        }
+        // if (savedPost.input === globalState.lastSavedPost.input) {
+        //     throw new Error('prev input and current input are the same')
+        // }
 
         DATABASE.addPost(savedPost)
         updateSavedPostContainer();

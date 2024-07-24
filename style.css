@@ -32,6 +32,11 @@
     --text-inverse: #EFF1F5;
 }
 
+:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsla(220, 100%, 50%, 80%);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -87,6 +92,7 @@ h1 {
 p {
     line-height: 1.6;
     font-size: 14;
+    opacity: 90%;
 }
 
 label {
@@ -275,38 +281,38 @@ textarea {
 
 /* Buttons save, analyze and clear */
 .btn {
-    padding: 10px 20px;
+    padding: 6px 12px;
     border: none;
-    font-weight: bold;
     border-radius: 4px;
     background-color: none;
     cursor: pointer;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 8px;
     transition: all 150ms ease;
-    font-size: 16px;
-
+    font-size: 14px;
 }
 
-.btn-save {
+.btn-secondary {
     border: 1px solid black;
     background-color: white;
-    cursor: pointer;
-    padding: 8px 12px;
-    width: 100px;
     border: 1px solid #ccc;
+    color: #414246;
 }
 
-.btn-save:disabled {
+.btn-secondary:disabled {
     background-color: #ccc;
     cursor: not-allowed;
     border: 1px solid #aaa;
 }
 
-.btn-save:not(:disabled):hover {
+.btn-nav {
+    background-color: #363A4F;
+    color: var(--text-inverse);
+}
+
+.btn-secondary:not(:disabled):hover {
     background-color: #f0f0f0;
 }
 
@@ -332,7 +338,7 @@ textarea {
     color: inherit;
 }
 
-.btn-extract,
+.btn .btn-extract,
 .btn-analyze {
     background-color: #3A36E4;
     color: var(--white);
@@ -346,6 +352,11 @@ textarea {
     /* display: flex; */
     justify-content: space-between;
     flex-wrap: wrap;
+}
+
+.toolbar-btn-group {
+    display: flex;
+    gap: 4px;
 }
 
 .toolbar .toaster {
@@ -747,6 +758,14 @@ textarea {
     cursor: pointer;
 }
 
+.delete-btn {
+    transform: all 150ms ease-in-out;
+}
+
+.delete-btn:hover {
+    color: var(--out-age);
+}
+
 .dark-mode .deleteButton {
     color: white;
 }
@@ -902,6 +921,10 @@ textarea {
     display: flex;
     gap: 16px;
     justify-content: center;
+}
+
+.authors a:hover {
+    color: var(--out-physical);
 }
 
 /* dark mode */
@@ -1146,7 +1169,7 @@ textarea {
     border-radius: 5px;
     padding: 10px;
     position: absolute;
-    z-index: 1000;
+    z-index: 9999999;
     top: 125%;
     left: 50%;
     margin-left: -100px;

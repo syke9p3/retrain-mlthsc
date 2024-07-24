@@ -48,7 +48,7 @@ class SavedPost {
             <div class="saved-post-component fade-in">
                 <div class="saved-post-toolbar">
                     <b class="saved-post-id">ID: ${id}</b>
-                    <span class="toolbar-btn delete-btn" title="Delete this post" data-id="${id}">
+                    <span class="toolbar-btn delete-btn" title="Delete this post" data-id="${id}" data-text="${savedPost.input}">
                     <i class='bx bxs-trash-alt'></i>
                     </span>
                     </div>
@@ -149,7 +149,7 @@ export class SavedPostsDatabase {
     static createSavedPost = (input, output) => {
 
         if (!input) {
-            alert('Please perform a classification')
+            alert('Please perform a classification to save the results.')
             throw new Error('input is undefined')
         }
 

@@ -20,6 +20,7 @@ const wordCountDisplay = document.getElementById("word-count");
 const labelsSection = document.getElementById("label-section");
 const labelsContainer = document.getElementById("labels-container");
 const outputContainer = document.getElementById("output-container");
+const outputSection = document.getElementById("output-section");
 const inputDisplayContainer = document.getElementById("input-display-container");
 const inputDisplay = document.getElementById("input-display");
 const inputDisplayText = document.getElementById("input-display-text");
@@ -27,7 +28,6 @@ const inputDisplayDate = document.getElementById("input-display-date");
 const tweetTime = document.getElementById("tweet-time");
 const tweetDate = document.getElementById("tweet-date");
 const outputDisplay = document.getElementById("output-display");
-const loadingDisplay = document.getElementById("loading-display");
 const modelStatusDisplay = document.getElementById("model-status");
 const saveBtn = document.getElementById("save-btn");
 const exportButton = document.getElementById("export-btn");
@@ -110,6 +110,8 @@ document.addEventListener("DOMContentLoaded", function () {
         handleInputChange()
         updateSubmitButtonState()
     }
+
+    // Initialize delete event listeners
 
 
 
@@ -360,7 +362,6 @@ const handleSubmitInput = async () => {
         return
     }
 
-
     // TEST: should get output from the classifier if successful
     // TEST: should display output to the UI
     // 1. Disable button
@@ -374,7 +375,7 @@ const handleSubmitInput = async () => {
 
         const output = await classify(globalState.input)
 
-        outputContainer.scrollIntoView({ behavior: "smooth" });
+        outputSection.scrollIntoView({ behavior: "smooth" });
 
         updateModelStatus("ready")
 
@@ -440,8 +441,9 @@ exampleSelector.oninput = () => {
  */
 
 const updateSavedPostContainer = () => {
-    DATABASE.renderPosts()
+    DATABASE.renderPostsContainer()
     DATABASE.renderCount()
+    addDeleteEventListeners();
 }
 
 
@@ -463,10 +465,7 @@ const handleSavePost = () => {
         DATABASE.addPost(savedPost)
         updateSavedPostContainer();
         setGlobalLastSavedPost(savedPost)
-
-        if (isSmallScreenSize())
-            savedPostsSection.scrollIntoView({ behavior: "smooth" });
-
+        savedPostsSection.scrollIntoView({ behavior: "smooth" });
 
     } catch (error) {
         console.error("Error: ", error)
@@ -474,10 +473,22 @@ const handleSavePost = () => {
     }
 }
 
-const handleDeletePost = (id) => {
-    updateSavedPostContainer()
-}
+const addDeleteEventListeners = () => {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.onclick = (e) => {
+            const postId = button.getAttribute('data-id');
+            console.log(`deleting ${postId}`);
 
+            try {
+                DATABASE.deletePost(postId);
+                updateSavedPostContainer();
+            } catch (e) {
+                console.error('Error: ', e)
+            }
+        };
+    });
+}
 
 saveBtn.onclick = () => {
     handleSavePost()
@@ -490,7 +501,7 @@ exportButton.onclick = () => {
 
     // DATABASE
 
-    DATABASE.downloadReport('', 'json')
+    DATABASE.downloadReport('', 'csv')
 
 }
 

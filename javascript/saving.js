@@ -1,5 +1,5 @@
 import { SAVED_POSTS_LS_KEY } from "./constants.js";
-import { convertToPercent, debug } from "./utils.js";
+import { convertToCSV, convertToPercent, debug } from "./utils.js";
 
 class SavedPost {
     constructor(input, output) {
@@ -14,24 +14,6 @@ class SavedPost {
         return id;
     }
 
-    generateComponent = () => {
-
-        let outputBars = ``;
-
-        this.output.forEach(category => {
-            outputBars += `<p>${category.label} ${convertToPercent(category.score)}</p>`
-        });
-
-        const component = `
-            <div class=""}>
-                <p>${this.input}</p>
-                <div>
-                    ${outputBars}
-                </div>
-            </div>
-        `
-        return component;
-    }
 
     /**
      * generates a Component HTML for a savedPost
@@ -63,28 +45,24 @@ class SavedPost {
         });
 
         const component = `
-            <div class="saved-post-component ${isFirst && 'fade-in'}" data-id="${id}">
+            <div class="saved-post-component fade-in">
                 <div class="saved-post-toolbar">
                     <b class="saved-post-id">ID: ${id}</b>
-                    <span class="toolbar-btn" > // onclick='delete this post'
-                        <i class='bx bx-dots-horizontal-rounded'></i>
+                    <span class="toolbar-btn delete-btn" title="Delete this post" data-id="${id}">
+                    <i class='bx bxs-trash-alt'></i>
                     </span>
-                </div>
-                <div class="saved-post-content tooltip">
+                    </div>
+                    <div class="saved-post-content">
                     <div class='saved-post-text-container '>
                         <div class='saved-post-text'>
-                        <span class="input-display-date">
-                            <div id="tweet-time">3:41:55 AM</div>
-                            <div class="tweet-date-separator">•</div>
-                            <div id="tweet-date">22 Jan 2023</div>
-                        </span>
+                    
                         <p>${savedPost.input}</p>
                         </div>
-           
+                        
                     </div>
-                        <div class='saved-post-labels'>
-                          ${labelsContainer}
-                      </div>
+                    <div class='saved-post-labels'>
+                    ${labelsContainer}
+                    </div>
                     </div>
                     </div>
                     `
@@ -92,6 +70,12 @@ class SavedPost {
         return component;
     }
 
+    // <i class='bx bx-dots-horizontal-rounded'></i>
+    // <span class="input-display-date">
+    // <div id="tweet-time">3:41:55 AM</div>
+    // <div class="tweet-date-separator">•</div>
+    // <div id="tweet-date">22 Jan 2023</div>
+    // </span>
 
 
 }
@@ -165,6 +149,7 @@ export class SavedPostsDatabase {
     static createSavedPost = (input, output) => {
 
         if (!input) {
+            alert('Please perform a classification')
             throw new Error('input is undefined')
         }
 
@@ -230,7 +215,7 @@ export class SavedPostsDatabase {
         return savedPosts;
     }
 
-    renderPosts(id) {
+    renderPostsContainer(id) {
 
         if (id) {
             console.log('render post id:', id)
@@ -238,10 +223,32 @@ export class SavedPostsDatabase {
 
         let HTMLcontents = ``
 
-        this.savedPosts.forEach((savedPost, index) => {
-            const isFirst = index === 0;
-            HTMLcontents += SavedPost.generateSavedPostComponent(savedPost, isFirst)
-        })
+        if (this.savedPosts.length === 0) {
+
+            this.elements.containerElement.style.display = "block"
+
+            HTMLcontents = `
+            <div class='no-posts-container fade-in'>
+                <div>
+                    <h3 class='no-posts-title'>No classifications saved </h3>
+                    <p class='no-posts-subtext'>Save a classification result to add a post in your browser.</p>
+                </div>
+            </div>
+            `
+
+        } else {
+
+            this.elements.containerElement.style.display = "grid"
+
+
+            this.savedPosts.forEach((savedPost, index) => {
+                const isFirst = index === 0;
+                HTMLcontents += SavedPost.generateSavedPostComponent(savedPost, isFirst)
+            })
+
+        }
+
+
 
         console.log(HTMLcontents);
         console.log(this.elements.containerElement);
@@ -257,8 +264,7 @@ export class SavedPostsDatabase {
             fileContent = JSON.stringify(this.savedPosts, null, 2);
             mimeType = 'application/json';
         } else if (filetype === 'csv') {
-            // TODO: fileContent = convertToCSV(data);
-            fileContent = data;
+            fileContent = convertToCSV(this.savedPosts);
             mimeType = 'text/csv';
         } else {
             throw new Error('Invalid format. Should be json or csv.')

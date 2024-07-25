@@ -181,7 +181,12 @@ export class SavedPostsDatabase {
         console.log("after adding post: New Localstorage:", this.savedPosts);
     }
 
-    deletePost(id) {
+    deleteAllPost() {
+        this.savedPosts = [];
+        this.updateLocalStorage();
+    }
+
+    deletePostById(id) {
 
         const postIndex = this.savedPosts.findIndex(post => post.id === id);
 
@@ -256,7 +261,16 @@ export class SavedPostsDatabase {
         this.elements.containerElement.innerHTML = HTMLcontents;
     }
 
-    downloadReport(filename, filetype) {
+    /**
+     * Downloads savedPosts as json or csv. 
+     * Accepts a config object with filename and filetype properties.
+     * Default file name will be provided if no filename value is specified.
+     * @param {{filename: string, filetype: string}} config 
+     */
+    downloadReport(config) {
+
+        const filetype = config.filetype;
+        let filename = config.filename || '';
 
         let fileContent, mimeType;
 
@@ -269,7 +283,6 @@ export class SavedPostsDatabase {
         } else {
             throw new Error('Invalid format. Should be json or csv.')
         }
-
 
         if (!filename) {
             filename = 'report_' + createID()

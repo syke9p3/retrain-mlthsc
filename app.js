@@ -30,10 +30,15 @@ const tweetDate = document.getElementById("tweet-date");
 const outputDisplay = document.getElementById("output-display");
 const modelStatusDisplay = document.getElementById("model-status");
 const saveBtn = document.getElementById("save-btn");
-const exportButton = document.getElementById("export-btn");
+const exportButtons = document.querySelectorAll(".export-btn");
 const savedPostsSection = document.getElementById("saved-post-section");
 const savedPostsContainer = document.getElementById("saved-posts");
 const savedPostsCounter = document.getElementById("saved-posts-counter");
+const dropdownButtons = document.querySelectorAll('.btn-dropdown');
+const dropdownMenus = document.querySelectorAll('.dropdown');
+const deleteAllButton = document.getElementById('sp-btn-delete');
+
+
 
 // Initialize Database
 const DATABASE = new SavedPostsDatabase(SAVED_POSTS_LS_KEY,
@@ -112,26 +117,69 @@ document.addEventListener("DOMContentLoaded", function () {
         updateSubmitButtonState()
     }
 
-    // Initialize delete event listeners
+    exportButtons.forEach(button => {
+        button.onclick = () => {
+
+            const filetype = button.getAttribute('data-filetype');
+            console.log('exporting as', filetype)
+            DATABASE.downloadReport({ filetype, filename: '' })
+        }
+
+    })
 
 
 
     // Get content of localstorage
     DATABASE.initializeSavedPosts()
-
-    // try {
-    //     const firstPost = DATABASE.getSavedPostByIndex(1)
-    //     savedPostsContainer.innerHTML += generateSavedPostsComponent(firstPost);
-    // } catch (e) {
-    //     console.log('e: ', e)
-    // }
-
-    // render savedPosts container
-    // renderSavedPostsComponent();
-
     updateSavedPostContainer();
 
+    // Initialize delete event listeners
+
+    deleteAllButton.onclick = () => {
+        if (!confirm(`Are you sure you want to delete all saved posts?\nThis action cannot be undone.`)) return;
+
+        try {
+            DATABASE.deleteAllPosts();
+            updateSavedPostContainer();
+        } catch (e) {
+            console.error('Error: ', e)
+        }
+    }
+
+    dropdownButtons.forEach(button => {
+        button.onclick = (e) => {
+            e.stopPropagation();
+            console.log('dropdown-btn clicked')
+
+            // TODO: refactor to allow moving dropdown position
+            const dropdownMenu = button.nextElementSibling;
+            const isClosed = !dropdownMenu.classList.contains('active');
+
+            closeAllDropdowns();
+
+
+            if (isClosed) {
+                dropdownMenu.classList.add('active');
+            } else {
+                dropdownMenu.classList.remove('active');
+            }
+
+
+        }
+    })
+
+    window.onclick = (e) => {
+        closeAllDropdowns();
+    }
+
+    const closeAllDropdowns = () => {
+        dropdownMenus.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    }
+
 });
+
 
 
 
@@ -482,10 +530,10 @@ const addDeleteEventListeners = () => {
             const postText = button.getAttribute('data-text');
             console.log(`deleting ${postId}`);
 
-            if (!confirm(`Are you sure you want to delete Post ID:${postId}? \n\nText:\n\n${postText}`)) return;
+            if (!confirm(`Are you sure you want to delete Post ID:${postId}?\nThis action cannot be undone.\n\n"""\n${postText}\n\n"""`)) return;
 
             try {
-                DATABASE.deletePost(postId);
+                DATABASE.deletePostById(postId);
                 updateSavedPostContainer();
             } catch (e) {
                 console.error('Error: ', e)
@@ -499,13 +547,4 @@ saveBtn.onclick = () => {
 }
 
 
-exportButton.onclick = () => {
-    console.log('export')
-    console.log(DATABASE)
-
-    // DATABASE
-
-    DATABASE.downloadReport('', 'csv')
-
-}
 

@@ -235,21 +235,41 @@
 
         <!-- Saved Posts Section -->
         <section id="saved-post-section" class="section">
-            <div class="flex justify-between align-center section-header" style="padding-bottom: 10px">
+            <div class="flex justify-between align-center section-header">
                 <div class="counter-container">
                     <div id="saved-posts-counter" class="saved-posts-counter">0</div>
                     <h4>Saved Posts</h4>
                 </div>
                 <div class="toolbar-btn-group">
-                    <!-- <button id="sp-dots-menu" class="btn btn-secondary" title="Export to CSV">
-                        <i class='bx bx-dots-vertical-rounded'></i>
-                    </button> -->
-                    <button id="export-btn" class="btn btn-secondary" title="Export as CSV">
-                        <i class="bx bx-export bx-xs"></i>
-                        <span>Export as CSV</span>
-                        <!-- <i class='bx bx-chevron-down' style="font-size: 16px;"></i> -->
-                    </button>
+
+                    <div class="dropdown-menu">
+                        <button id="export-btn-dropdown" class="btn btn-secondary btn-dropdown" title="Export as CSV">
+                            <i class="bx bx-export bx-xs"></i>
+                            <span>Export</span>
+                            <i class='bx bx-chevron-down' style="font-size: 16px;"></i>
+                        </button>
+                        <div class="dropdown" aria-hidden="true">
+                            <div role="button" class="export-btn" data-filetype="json">
+                                <p>Export as JSON</p>
+                            </div>
+                            <div role="button" class="export-btn" data-filetype="csv">
+                                <p>Export as CSV</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-menu">
+                        <button id="sp-btn-dropdown" class="btn btn-secondary btn-dropdown btn-dots">
+                            <i class='bx bx-dots-vertical-rounded'></i>
+                        </button>
+                        <div class="dropdown" aria-hidden="true">
+                            <div role="button" id="sp-btn-delete">
+                                <i class='bx bxs-trash-alt'></i>
+                                <p>Delete all posts</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
             <!-- <div id="labelFilterButtons">
                 <button class="all-filter filterButton active" data-label="">

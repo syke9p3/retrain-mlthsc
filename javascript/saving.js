@@ -181,7 +181,7 @@ export class SavedPostsDatabase {
         console.log("after adding post: New Localstorage:", this.savedPosts);
     }
 
-    deleteAllPost() {
+    deleteAllPosts() {
         this.savedPosts = [];
         this.updateLocalStorage();
     }
@@ -269,11 +269,18 @@ export class SavedPostsDatabase {
      */
     downloadReport(config) {
 
+        if (this.savedPosts.length === 0) {
+            alert('No posts to save.')
+            throw new Error('No posts to save.');
+        }
+
+
         const filetype = config.filetype;
         let filename = config.filename || '';
 
         let fileContent, mimeType;
 
+        /* Allow only json and csv */
         if (filetype === 'json') {
             fileContent = JSON.stringify(this.savedPosts, null, 2);
             mimeType = 'application/json';
@@ -284,6 +291,7 @@ export class SavedPostsDatabase {
             throw new Error('Invalid format. Should be json or csv.')
         }
 
+        /* Give default file name if no filenameis provided */
         if (!filename) {
             filename = 'report_' + createID()
         }

@@ -1,8 +1,8 @@
 # MLTHSC Javascript Web App (v2)
 
-Now works online!
+***Now works online!***
 
-Here contains all related files for reworking the javascript-based web app for the project Multilabel Tagalog Hate Speech Classifier (MLTHSC) including the notebooks for retraining the classifier model. 
+This repository contains all related files for the rework of the JavaScript-based web app of Multilabel Tagalog Hate Speech Classifier (MLTHSC). Also includes the Jupyter Notebooks written for retraining the classifier model in Python. 
 
 (v1): [GitHub: syke9p3/mlthsc-thesis](https://github.com/syke9p3/mlthsc-thesis)
 
@@ -11,10 +11,10 @@ Here contains all related files for reworking the javascript-based web app for t
   <img src="./assets/mlthsc-screenshot-2.png"/>
 </p>
 
-This project started as a college thesis proposal - a hate speech classifier that could classify Tagalog text based on different categories like age, gender, physical, etc. 
+The project started as a college thesis proposal - a hate speech classifier that can classify Tagalog text based on different categories like age, gender, physical, etc. 
 
-Our time was mostly spent on writing the manuscript, gathering text data, implementing the software architecture of our model, training, testing, etc. Time was running short for the upcoming defense at that time that's why we had to build something fast - a simple user interface that would demonstrate the functionality to the panelists. 
-
+Our time was mostly spent on writing the manuscript, gathering text data, implementing the software architecture of our model, training, testing, etc. 
+Time was running short for the upcoming defense at that time so we needed to build something fast - a simple user interface that would demonstrate the functionality to the panelists. The *v1* web app wasn't very polished as a result hence the need for a rework. Also, the greatest challenge we had was making the classifier functional when being deployed online. Since the original model was large (about 500+ mb), hosting sites are not able to accomodate it because they have storage size limitations for uploading files. That is why the model had to be retrained and quantized so its size can be reduced as to not be too heavy to load and perform inference faster albeit sacrificing classification accuracy. Regardless, the original model is still available to try which demo I'll be deploying in Huggingface Spaces soon. 
 
 ## What changed? 
 
@@ -41,14 +41,16 @@ Our time was mostly spent on writing the manuscript, gathering text data, implem
 - pagination
 - dark mode (restructuring CSS)
 - implementing accessibility (ARIA) standards
-- might try to rewrite this again in React
+- (might try to rewrite this again in React)
+
+<!-- 
 
 ## Some notes (things I learned)
 
 - I just recently learned about the concept of *dependency injection* (DI) while working on this project after I had already implemented global state in the app. I am using a global state because the previous iteration of this project didn't so while the codebase was growing it was hard to track changes between the states of the UI and side-effects. However, as I was reworking the project I am directly using the global state inside the functions, which I recently learned was bad practice. It makes unit testing difficult since the function can't know in advance the values held by the global state. I read a response Stackoverflow that says instead of the functions looking for dependencies, inject them instead into the function (pass the state as an argument). This way, it's easier to test because mock data can be inserted as opposed to being hidden away in a global state.
 
 
-<!-- 
+
 
 # Features
 

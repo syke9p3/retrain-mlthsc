@@ -224,7 +224,7 @@ const updateWordCountDisplay = (count) => {
     if (!isValidCharacterCount(count)) {
         wordCountDisplay.style.color = "red";
     } else {
-        wordCountDisplay.style.color = "black";
+        wordCountDisplay.style.color = "#3A36E4";
 
     }
 }

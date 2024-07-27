@@ -9,14 +9,13 @@ class SavedPost {
     }
 
     #createID = () => {
-        // Temporary implementation
+        // Temporary implementation - returns the date when saved button was pressed as id
         const id = Date.now().toString()
         return id;
     }
 
-
     /**
-     * generates a Component HTML for a savedPost
+     * Generates a HTML Component for a Saved Post Card
      * @param {savedPost} savedPost 
      * @returns 
      */
